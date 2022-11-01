@@ -2,7 +2,9 @@ package com.example.demo.core.security;
 
 import com.example.demo.core.security.helpers.JwtProperties;
 import com.example.demo.domain.user.UserService;
+
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -38,23 +40,25 @@ public class WebSecurityConfig {
 
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-    return http.authorizeRequests(requests -> requests.antMatchers(HttpMethod.POST, "/user/login","/user/register")
-                                                      .permitAll()
-                                                      .anyRequest()
-                                                      .authenticated())
-               .addFilterAfter(new JWTAuthenticationFilter(new AntPathRequestMatcher("/user/login", "POST"),
-                   authenticationManager(), jwtProperties), UsernamePasswordAuthenticationFilter.class)
-               .addFilterAfter(new JWTAuthorizationFilter(userService, jwtProperties),
-                   UsernamePasswordAuthenticationFilter.class)
-               .sessionManagement()
-               .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-               .and()
-               .cors()
-               .configurationSource(corsConfigurationSource())
-               .and()
-               .csrf()
-               .disable()
-               .build();
+    return http.authorizeRequests(requests -> requests.antMatchers(HttpMethod.POST, "/user/login", "/user/register")
+        .permitAll()
+        .anyRequest()
+        .authenticated())
+      .addFilterAfter(new JWTAuthenticationFilter(new AntPathRequestMatcher("/user/login", "POST"),
+        authenticationManager(), jwtProperties), UsernamePasswordAuthenticationFilter.class)
+      .addFilterAfter(new JWTAuthorizationFilter(userService, jwtProperties),
+        UsernamePasswordAuthenticationFilter.class)
+      .sessionManagement()
+      .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+      .and()
+      .cors()
+      .configurationSource(corsConfigurationSource())
+      .and()
+      .csrf()
+      .disable()
+      .formLogin()
+      .and()
+      .build();
   }
 
   @Bean
