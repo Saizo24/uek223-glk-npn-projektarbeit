@@ -7,7 +7,9 @@ values ('ba804cb9-fa14-42a5-afaf-be488742fc54', 'admin@example.com', 'James','Bo
 
 --ROLES
 INSERT INTO role(id, name)
-VALUES ('d29e709c-0ff1-4f4c-a7ef-09f656c390f1', 'DEFAULT')
+VALUES ('d29e709c-0ff1-4f4c-a7ef-09f656c390f1', 'DEFAULT'),
+       ('47883133-4042-4c2c-ac41-c1fd5631864d','USER'),
+       ('4b650987-a0d9-4bf6-834e-b8f9e3db69f8','ADMIN')
 ON CONFLICT DO NOTHING;
 
 --AUTHORITIES
