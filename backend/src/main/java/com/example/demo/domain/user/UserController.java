@@ -35,10 +35,13 @@ public class UserController {
   }
 
   @GetMapping("/{id}")
+  @PreAuthorize(
+      "hasAuthority('USER_MODIFY') || @userPermissionEvaluator.hasSameId(authentication.principal.user, id)")
   public ResponseEntity<UserDTO> retrieveById(@PathVariable UUID id) {
     User user = userService.findById(id);
     return new ResponseEntity<>(userMapper.toDTO(user), HttpStatus.OK);
   }
+
 
   @GetMapping({"", "/"})
   public ResponseEntity<List<UserDTO>> retrieveAll() {
