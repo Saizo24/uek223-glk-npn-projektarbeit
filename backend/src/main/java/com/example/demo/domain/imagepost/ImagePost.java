@@ -30,7 +30,7 @@ public class ImagePost extends ExtendedEntity {
 
     @Column()
     @ManyToOne()
-    @JoinColumn(name = "id_author")
+    @JoinColumn(name = "author_id", referencedColumnName = "id")
     private User author;
 
     public ImagePost(UUID id, String imageURL, String description, LocalDateTime publicationTime, Set<User> likes, User author) {

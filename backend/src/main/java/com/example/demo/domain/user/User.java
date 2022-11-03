@@ -3,6 +3,8 @@ package com.example.demo.domain.user;
 import com.example.demo.core.generic.ExtendedEntity;
 import com.example.demo.domain.imagepost.ImagePost;
 import com.example.demo.domain.role.Role;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -25,6 +27,7 @@ public class User extends ExtendedEntity {
   private String password;
 
   @OneToMany(mappedBy = "author")
+  @JsonBackReference
   private Set<ImagePost> imagePosts = new HashSet<>();
 
   @ManyToMany(fetch = FetchType.EAGER)
