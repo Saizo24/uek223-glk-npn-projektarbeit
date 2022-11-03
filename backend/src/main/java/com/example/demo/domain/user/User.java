@@ -1,17 +1,12 @@
 package com.example.demo.domain.user;
 
 import com.example.demo.core.generic.ExtendedEntity;
+import com.example.demo.domain.imagepost.ImagePost;
 import com.example.demo.domain.role.Role;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "users")
@@ -29,6 +24,9 @@ public class User extends ExtendedEntity {
   @Column(name = "password")
   private String password;
 
+  @OneToMany(mappedBy = "author")
+  private Set<ImagePost> imagePosts = new HashSet<>();
+
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(name = "users_role", joinColumns = @JoinColumn(name = "users_id", referencedColumnName = "id"),
              inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
@@ -37,12 +35,13 @@ public class User extends ExtendedEntity {
   public User() {
   }
 
-  public User(UUID id, String firstName, String lastName, String email, String password, Set<Role> roles) {
+  public User(UUID id, String firstName, String lastName, String email, String password, Set<ImagePost> imagePosts ,Set<Role> roles) {
     super(id);
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
     this.password = password;
+    this.imagePosts = imagePosts;
     this.roles = roles;
   }
 
@@ -80,6 +79,14 @@ public class User extends ExtendedEntity {
   public User setPassword(String password) {
     this.password = password;
     return this;
+  }
+
+  public Set<ImagePost> getImagePosts() {
+    return imagePosts;
+  }
+
+  public void setImagePosts(Set<ImagePost> imagePosts) {
+    this.imagePosts = imagePosts;
   }
 
   public Set<Role> getRoles() {
