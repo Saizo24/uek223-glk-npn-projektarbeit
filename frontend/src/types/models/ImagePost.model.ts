@@ -1,7 +1,8 @@
 import { User } from "./User.model"
 
 export type ImagePost = {
-    imageUrl: string
+    id: string
+    imageURL: string
     description: string
     author: User
     publicationTime: Date
