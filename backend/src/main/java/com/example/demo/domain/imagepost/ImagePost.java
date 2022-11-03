@@ -24,11 +24,10 @@ public class ImagePost extends ExtendedEntity {
 
     @Column()
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "imagePost_user", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+    @JoinTable(name = "image_post_user", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
         inverseJoinColumns = @JoinColumn(name = "imagePost_id", referencedColumnName = "id"))
     private Set<User> likes = new HashSet<>();
 
-    @Column()
     @ManyToOne()
     @JoinColumn(name = "author_id", referencedColumnName = "id")
     private User author;
