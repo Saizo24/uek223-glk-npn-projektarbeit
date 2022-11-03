@@ -27,6 +27,11 @@ public class UserServiceImpl extends ExtendedServiceImpl<User> implements UserSe
   }
 
   @Override
+  public User findByUsername(String email) throws UsernameNotFoundException {
+    return ((UserRepository) repository).findByEmail(email).orElseThrow(() -> new UsernameNotFoundException(email));
+  }
+
+  @Override
   public User register(User user) {
     user.setPassword(passwordEncoder.encode(user.getPassword()));
     return save(user);
