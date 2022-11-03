@@ -15,10 +15,10 @@ ON CONFLICT DO NOTHING;
 --AUTHORITIES
 INSERT INTO authority(id, name)
 VALUES ('2ebf301e-6c61-4076-98e3-2a38b31daf86', 'DEFAULT'),
-       ('3cef575c-49b7-4c34-858a-209b39dbc150', 'CREATE'),
        ('2b0a0711-8807-4d20-b376-5d5b184078c3', 'READ'),
-       ('0b37d53c-a9a1-443d-8f4b-0384ab77833c', 'UPDATE'),
-       ('1190fe33-5f17-46cb-a9df-dc0d949de63e', 'DELETE')
+       ('3cef575c-49b7-4c34-858a-209b39dbc150', 'USER_CREATE'),
+       ('0b37d53c-a9a1-443d-8f4b-0384ab77833c', 'USER_MODIFY'),
+       ('1190fe33-5f17-46cb-a9df-dc0d949de63e', 'USER_DELETE')
 ON CONFLICT DO NOTHING;
 
 --assign roles to users

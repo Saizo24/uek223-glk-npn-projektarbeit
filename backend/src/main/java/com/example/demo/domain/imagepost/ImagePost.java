@@ -4,6 +4,7 @@ import com.example.demo.core.generic.ExtendedEntity;
 import com.example.demo.domain.user.User;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -19,16 +20,20 @@ public class ImagePost extends ExtendedEntity {
     private String description;
 
     @Column()
+    private LocalDateTime publicationTime;
+
+    @Column()
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "imagePost_user", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
         inverseJoinColumns = @JoinColumn(name = "imagePost_id", referencedColumnName = "id"))
     private Set<User> likes = new HashSet<>();
 
 
-    public ImagePost(UUID id, String imageURL, String description, Set<User> likes) {
+    public ImagePost(UUID id, String imageURL, String description, LocalDateTime publicationTime, Set<User> likes) {
         super(id);
         this.imageURL = imageURL;
         this.description = description;
+        this.publicationTime = publicationTime;
         this.likes = likes;
     }
 
@@ -50,6 +55,14 @@ public class ImagePost extends ExtendedEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public LocalDateTime getPublicationTime() {
+        return publicationTime;
+    }
+
+    public void setPublicationTime(LocalDateTime publicationTime) {
+        this.publicationTime = publicationTime;
     }
 
     public Set<User> getLikes() {

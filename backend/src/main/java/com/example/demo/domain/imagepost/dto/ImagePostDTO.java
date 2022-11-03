@@ -6,6 +6,7 @@ import com.example.demo.domain.user.dto.UserDTO;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
 
@@ -14,16 +15,18 @@ public class ImagePostDTO extends ExtendedDTO {
     @NotNull
     private String imageURL;
 
-    @NotNull
     private String description;
+
+    private LocalDateTime publicationTime;
 
     @Valid
     private Set<UserDTO> likes;
 
-    public ImagePostDTO(UUID id, String imageURL, String description, Set<UserDTO> likes) {
+    public ImagePostDTO(UUID id, String imageURL, String description, LocalDateTime publicationTime, Set<UserDTO> likes) {
         super(id);
         this.imageURL = imageURL;
         this.description = description;
+        this.publicationTime = publicationTime;
         this.likes = likes;
     }
 
@@ -44,6 +47,14 @@ public class ImagePostDTO extends ExtendedDTO {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public LocalDateTime getPublicationTime() {
+        return publicationTime;
+    }
+
+    public void setPublicationTime(LocalDateTime publicationTime) {
+        this.publicationTime = publicationTime;
     }
 
     public Set<UserDTO> getLikes() {
