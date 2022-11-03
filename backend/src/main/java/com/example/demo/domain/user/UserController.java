@@ -1,9 +1,13 @@
 package com.example.demo.domain.user;
 
+import com.example.demo.domain.imagepost.ImagePost;
+import com.example.demo.domain.imagepost.dto.ImagePostDTO;
+import com.example.demo.domain.imagepost.dto.ImagePostMapper;
 import com.example.demo.domain.user.dto.UserDTO;
 import com.example.demo.domain.user.dto.UserMapper;
 import com.example.demo.domain.user.dto.UserRegisterDTO;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +31,13 @@ public class UserController {
 
   private final UserService userService;
   private final UserMapper userMapper;
+  private final ImagePostMapper imagePostMapper;
 
   @Autowired
-  public UserController(UserService userService, UserMapper userMapper) {
+  public UserController(UserService userService, UserMapper userMapper, ImagePostMapper imagePostMapper) {
     this.userService = userService;
     this.userMapper = userMapper;
+    this.imagePostMapper = imagePostMapper;
   }
 
   @GetMapping("/{id}")
@@ -44,9 +50,16 @@ public class UserController {
 
 
   @GetMapping({"", "/"})
+  @PreAuthorize("hasAuthority('USER_MODIFY')")
   public ResponseEntity<List<UserDTO>> retrieveAll() {
     List<User> users = userService.findAll();
     return new ResponseEntity<>(userMapper.toDTOs(users), HttpStatus.OK);
+  }
+
+  @GetMapping("/{username}/imageposts")
+  public ResponseEntity<Set<ImagePostDTO>> retrieveAllImagesByUser(@PathVariable String username) {
+    Set<ImagePost> imagePosts = userService.findByUsername(username).getImagePosts();
+    return new ResponseEntity<>(imagePostMapper.toDTOs(imagePosts), HttpStatus.OK);
   }
 
   @PostMapping("/register")

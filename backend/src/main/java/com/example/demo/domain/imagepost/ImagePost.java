@@ -28,13 +28,18 @@ public class ImagePost extends ExtendedEntity {
         inverseJoinColumns = @JoinColumn(name = "imagePost_id", referencedColumnName = "id"))
     private Set<User> likes = new HashSet<>();
 
+    @Column()
+    @ManyToOne()
+    @JoinColumn(name = "id_author")
+    private User author;
 
-    public ImagePost(UUID id, String imageURL, String description, LocalDateTime publicationTime, Set<User> likes) {
+    public ImagePost(UUID id, String imageURL, String description, LocalDateTime publicationTime, Set<User> likes, User author) {
         super(id);
         this.imageURL = imageURL;
         this.description = description;
         this.publicationTime = publicationTime;
         this.likes = likes;
+        this.author = author;
     }
 
     public ImagePost() {
@@ -71,5 +76,13 @@ public class ImagePost extends ExtendedEntity {
 
     public void setLikes(Set<User> likes) {
         this.likes = likes;
+    }
+
+    public User getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
     }
 }

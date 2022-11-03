@@ -13,4 +13,6 @@ public class ImagePostServiceImpl extends ExtendedServiceImpl<ImagePost> impleme
     public ImagePostServiceImpl(ExtendedRepository<ImagePost> repository, Logger logger) {
         super(repository, logger);
     }
+
+
 }
