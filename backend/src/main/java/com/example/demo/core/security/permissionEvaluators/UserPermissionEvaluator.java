@@ -16,9 +16,5 @@ public class UserPermissionEvaluator {
   }
 
   public boolean hasSameId(User principal, UUID id) {
-    if (principal.getId().equals(id)) {
-      return true;
-    }
-    return false;
-  }
-}
+    return principal.getId().equals(id);
+}}
