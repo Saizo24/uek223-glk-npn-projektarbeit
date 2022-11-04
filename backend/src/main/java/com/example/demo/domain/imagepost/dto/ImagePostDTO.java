@@ -1,6 +1,7 @@
 package com.example.demo.domain.imagepost.dto;
 
 import com.example.demo.core.generic.ExtendedDTO;
+import com.example.demo.domain.user.User;
 import com.example.demo.domain.user.dto.UserDTO;
 
 
@@ -22,12 +23,15 @@ public class ImagePostDTO extends ExtendedDTO {
     @Valid
     private Set<UserDTO> likes;
 
-    public ImagePostDTO(UUID id, String imageURL, String description, LocalDateTime publicationTime, Set<UserDTO> likes) {
+    private User author;
+
+    public ImagePostDTO(UUID id, String imageURL, String description, LocalDateTime publicationTime, Set<UserDTO> likes, User author) {
         super(id);
         this.imageURL = imageURL;
         this.description = description;
         this.publicationTime = publicationTime;
         this.likes = likes;
+        this.author = author;
     }
 
     public ImagePostDTO() {
@@ -63,5 +67,13 @@ public class ImagePostDTO extends ExtendedDTO {
 
     public void setLikes(Set<UserDTO> likes) {
         this.likes = likes;
+    }
+
+    public User getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
     }
 }

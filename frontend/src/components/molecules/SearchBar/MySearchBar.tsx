@@ -21,7 +21,7 @@ const MySearchBar = ({ searchItem, searchValue, setSearchValue }: Props) => {
                     placeholder={`Search for ${searchItem}`}
                     inputProps={{ "aria-label": "search name" }}
                     onChange={(newValue) => {
-                        setSearchValue(newValue)
+                        setSearchValue(newValue.target.value)
                     }}
                     value={searchValue}
                 />

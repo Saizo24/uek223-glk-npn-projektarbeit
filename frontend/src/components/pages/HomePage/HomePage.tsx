@@ -11,9 +11,11 @@ export default function HomePage() {
     ImagePostService()
       .getAllImagePosts()
       .then((data) => {
+        console.log(data)
         setImagePosts(data);
       });
   }, []);
+
   return (
     <div>
       <NavBar pageName="Your Blog (definitely not Twitter)" />
