@@ -42,6 +42,8 @@ public class WebSecurityConfig {
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     return http.authorizeRequests(requests -> requests.antMatchers(HttpMethod.POST, "/user/login", "/user/register")
         .permitAll()
+        .antMatchers(HttpMethod.GET, "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/swagger-resources/**", "/swagger.yaml")
+        .permitAll()
         .anyRequest()
         .authenticated())
       .addFilterAfter(new JWTAuthenticationFilter(new AntPathRequestMatcher("/user/login", "POST"),
