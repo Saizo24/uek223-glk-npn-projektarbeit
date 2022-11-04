@@ -1,16 +1,13 @@
-import React from 'react';
-import logo from '../../logo1.png';
+import React from "react";
+import BottomBar from "../../organisms/BottomBar/BottomBar";
+import NavBar from "../../organisms/NavBar/NavBar";
 
 export default function HomePage() {
   return (
     <div>
-      <img
-        src={logo}
-        style={{ filter: 'invert(100%)' }}
-        className='App-logo'
-        alt='logo'
-      />
+      <NavBar pageName="Your Blog (definitely not Twitter)" />
       <p>PlaceHolder</p>
+      <BottomBar />
     </div>
   );
 }

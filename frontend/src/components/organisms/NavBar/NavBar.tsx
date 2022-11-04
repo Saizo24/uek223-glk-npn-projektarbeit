@@ -17,12 +17,12 @@ export default function NavBar({ pageName }: Props) {
         sx={{ minHeight: "64px", justifyContent: "center", flex: 1 }}
       >
         <Toolbar>
-          <Button color="inherit" onClick={() => navigate("/homepage")}>
-            Homepage
-          </Button>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             {pageName}
           </Typography>
+          <Button color="inherit" onClick={() => navigate("/homepage")}>
+            Home
+          </Button>
           <Button color="inherit" onClick={() => navigate("/profile")}>
             Profile
           </Button>
