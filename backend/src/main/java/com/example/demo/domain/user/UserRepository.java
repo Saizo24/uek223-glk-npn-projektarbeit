@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository extends ExtendedRepository<User> {
   Optional<User> findByEmail(String email);
+
 }
