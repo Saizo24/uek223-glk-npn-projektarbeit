@@ -4,6 +4,7 @@ import LoginPage from "../components/pages/LoginPage/LoginPage";
 import ActiveUserContext from "../Contexts/ActiveUserContext";
 import PrivateRoute from "./PrivateRoute";
 import HomePage from "../components/pages/HomePage/HomePage";
+import LandingPage from "../components/pages/LandingPage/LandingPage";
 
 /**
  * Router component renders a route switch with all available pages
@@ -16,7 +17,8 @@ const Router = () => {
 
   return (
     <Routes>
-      <Route path={"/"} element={<HomePage />} />
+      <Route path={"/"} element={<LandingPage />} />
+      <Route path={"/homepage"} element={<HomePage />} />
       <Route path={"/login"} element={<LoginPage />} />
 
       <Route
@@ -26,7 +28,7 @@ const Router = () => {
         }
       />
       <Route
-        path="/users/:userId"
+        path={"/users/:userId"}
         element={
           <PrivateRoute
             authorities={[]}
@@ -36,7 +38,7 @@ const Router = () => {
       />
 
       <Route
-        path="/profile"
+        path={"/profile"}
         element={
           <PrivateRoute
             authorities={[]}
@@ -45,7 +47,7 @@ const Router = () => {
         }
       />
 
-      <Route path="*" element={<div>Not Found</div>} />
+      <Route path={"*"} element={<div>Not Found</div>} />
     </Routes>
   );
 };

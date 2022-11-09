@@ -11,7 +11,6 @@ export default function HomePage() {
     ImagePostService()
       .getAllImagePosts()
       .then((data) => {
-        console.log(data)
         setImagePosts(data);
       });
   }, []);
