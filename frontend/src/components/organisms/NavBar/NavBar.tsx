@@ -36,7 +36,7 @@ export default function NavBar({ pageName }: Props) {
           </Button>
           <Button
             color="inherit"
-            onClick={() => navigate("/profile")}
+            onClick={() => navigate("/users/:userId")}
             disabled={visible}
           >
             {pageName === "Someone's Blog" ? "" : "Profile"}
