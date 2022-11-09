@@ -10,7 +10,6 @@ type Props = {
 
 export default function NavBar({ pageName }: Props) {
   const navigate = useNavigate();
-
   const { logout } = useContext(ActiveUserContext);
   const visible: boolean = pageName === "Someone's Blog" ? true : false;
 
@@ -33,7 +32,7 @@ export default function NavBar({ pageName }: Props) {
             onClick={() => navigate("/homepage")}
             disabled={visible}
           >
-            {pageName === "Someone's Blog" ? "" : "Home"}
+            {pageName === "Someone's Blog" ? "" : "Homepage"}
           </Button>
           <Button
             color="inherit"

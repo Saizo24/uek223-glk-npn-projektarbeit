@@ -11,7 +11,7 @@ type Props = {
   setSearchValue: Function;
 };
 
-const MySearchBar = ({ searchItem, searchValue, setSearchValue }: Props) => {
+const SearchBar = ({ searchItem, searchValue, setSearchValue }: Props) => {
   return (
     <Box>
       <Paper>
@@ -32,4 +32,4 @@ const MySearchBar = ({ searchItem, searchValue, setSearchValue }: Props) => {
   );
 };
 
-export default MySearchBar;
+export default SearchBar;
