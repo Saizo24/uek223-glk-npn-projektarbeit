@@ -10,8 +10,8 @@ export default function BottomBar() {
   return (
     <Box sx={{ display: "flex", flex: 1 }}>
       <AppBar
-        position="static"
-        sx={{ minHeight: "64px", justifyContent: "center", flex: 1 }}
+        position="sticky"
+        sx={{ minHeight: "64px", justifyContent: "center", flex: 1, bottom: 0 }}
       >
         <Toolbar>
           <CopyRightIcon sx={{ mr: 2 }} /> Ngoc-Phuc Nguyen & Gian-Luca
