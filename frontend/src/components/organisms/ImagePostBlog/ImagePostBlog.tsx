@@ -11,7 +11,7 @@ type Props = {
 
 const ImagePostBlog = ({ imagePostList, postsEditable }: Props) => {
     const [imagePosts, setImagePosts] = useState(imagePostList);
-    const [searchValue, setSearchValue] = useState(" ");
+    const [searchValue, setSearchValue] = useState("");
 
     useEffect(() => {
         setImagePosts(imagePostList);
@@ -28,7 +28,7 @@ const ImagePostBlog = ({ imagePostList, postsEditable }: Props) => {
                 .filter((post) => {
                     return `${post.author.firstName} ${post.author.lastName}`
                         .toLocaleLowerCase()
-                        .includes(searchValue);
+                        .includes(searchValue.toLocaleLowerCase());
                 })
                 .map((post) => {
                     return <ImagePostEntry imagePost={post} editable={postsEditable} />;
