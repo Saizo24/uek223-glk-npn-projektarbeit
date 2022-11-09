@@ -1,6 +1,7 @@
 import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material";
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import ActiveUserContext from "../../../Contexts/ActiveUserContext";
 
 type Props = {
   pageName: string;
@@ -9,6 +10,12 @@ type Props = {
 
 export default function NavBar({ pageName }: Props) {
   const navigate = useNavigate();
+  const { logout } = useContext(ActiveUserContext);
+  const visible: boolean = pageName === "Someone's Blog" ? true : false;
+
+  const handleSubmit = () => {
+    logout();
+  };
 
   return (
     <Box sx={{ display: "flex", flex: 1 }}>
@@ -20,14 +27,22 @@ export default function NavBar({ pageName }: Props) {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             {pageName}
           </Typography>
-          <Button color="inherit" onClick={() => navigate("/homepage")}>
-            Home
+          <Button
+            color="inherit"
+            onClick={() => navigate("/homepage")}
+            disabled={visible}
+          >
+            {pageName === "Someone's Blog" ? "" : "Homepage"}
           </Button>
-          <Button color="inherit" onClick={() => navigate("/profile")}>
-            Profile
+          <Button
+            color="inherit"
+            onClick={() => navigate("/profile")}
+            disabled={visible}
+          >
+            {pageName === "Someone's Blog" ? "" : "Profile"}
           </Button>
-          <Button color="inherit" onClick={() => navigate("/login")}>
-            Logout
+          <Button color="inherit" onClick={handleSubmit} disabled={visible}>
+            {pageName === "Someone's Blog" ? "" : "Logout"}
           </Button>
         </Toolbar>
       </AppBar>

@@ -1,16 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import ActiveUserContext from "../../../Contexts/ActiveUserContext";
 import { ImagePostService } from "../../../Services/ImagePostService";
 import { ImagePost } from "../../../types/models/ImagePost.model";
 import BottomBar from "../../organisms/BottomBar/BottomBar";
 import ImagePostBlog from "../../organisms/ImagePostBlog/ImagePostBlog";
 import NavBar from "../../organisms/NavBar/NavBar";
 
-export default function HomePage() {
+export default function ProfilePage() {
   const [imagePosts, setImagePosts] = useState<ImagePost[]>([]);
+  const activeUserContext = useContext(ActiveUserContext);
+  const activeUser = activeUserContext.user;
   useEffect(() => {
     ImagePostService()
-      .getAllImagePosts()
+      .getAllImagePostsByUser(activeUser ? activeUser.email : "")
       .then((data) => {
+        console.log(data);
         setImagePosts(data);
       });
   }, []);

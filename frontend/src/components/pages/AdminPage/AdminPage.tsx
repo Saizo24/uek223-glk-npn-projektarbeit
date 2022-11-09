@@ -5,19 +5,20 @@ import BottomBar from "../../organisms/BottomBar/BottomBar";
 import ImagePostBlog from "../../organisms/ImagePostBlog/ImagePostBlog";
 import NavBar from "../../organisms/NavBar/NavBar";
 
-export default function HomePage() {
+export default function AdminPage() {
   const [imagePosts, setImagePosts] = useState<ImagePost[]>([]);
   useEffect(() => {
     ImagePostService()
       .getAllImagePosts()
       .then((data) => {
+        console.log(data);
         setImagePosts(data);
       });
   }, []);
 
   return (
     <div>
-      <NavBar pageName="Your Blog (definitely not Twitter)" />
+      <NavBar pageName="Your Admin Page (definitely not Twitter again)" />
       <ImagePostBlog imagePostList={imagePosts} postsEditable={false} />
       <BottomBar />
     </div>

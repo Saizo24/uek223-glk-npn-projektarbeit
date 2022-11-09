@@ -53,7 +53,9 @@ const PrivateRoute: React.FC<Props> = ({
    */
   const hasNeededAuthorities =
     authorities.length === 0 ||
-    authorities.some(AuthorityService.hasAuthority.toString);
+    authorities.some((authority) => {
+      return AuthorityService.hasAuthority(authority.name);
+    });
 
   /**
    * If the user doesn't possess the needed authorities Redirect the user to

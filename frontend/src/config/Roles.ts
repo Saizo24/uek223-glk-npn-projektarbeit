@@ -1,8 +1,6 @@
-enum roles {}
-/*
-  add your roles here. E.g:
-  
+enum roles {
   USER = "USER",
-*/
+  ADMIN = "ADMIN"
+}
 
 export default roles;
