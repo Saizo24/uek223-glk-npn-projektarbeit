@@ -22,7 +22,10 @@ public class ImagePostDTO extends ExtendedDTO {
     @Valid
     private Set<UserDTO> likes;
 
-    public ImagePostDTO(UUID id, String imageURL, String description, LocalDateTime publicationTime, Set<UserDTO> likes) {
+    @Valid
+    private UserDTO author;
+
+    public ImagePostDTO(UUID id, String imageURL, String description, LocalDateTime publicationTime, Set<UserDTO> likes, UserDTO author) {
         super(id);
         this.imageURL = imageURL;
         this.description = description;
@@ -63,5 +66,13 @@ public class ImagePostDTO extends ExtendedDTO {
 
     public void setLikes(Set<UserDTO> likes) {
         this.likes = likes;
+    }
+
+    public UserDTO getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(UserDTO author) {
+        this.author = author;
     }
 }
