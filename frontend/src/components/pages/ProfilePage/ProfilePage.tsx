@@ -12,7 +12,7 @@ export default function ProfilePage() {
   const activeUser = activeUserContext.user;
   useEffect(() => {
     ImagePostService()
-      .getAllImagePostsByUser(activeUser ? activeUser.email : "")
+      .getAllImagePostsByUser(activeUser ? activeUser.email : "", 0)
       .then((data) => {
         console.log(data);
         setImagePosts(data);

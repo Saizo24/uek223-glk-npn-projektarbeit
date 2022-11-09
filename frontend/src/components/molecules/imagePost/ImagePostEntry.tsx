@@ -18,7 +18,7 @@ const ImagePostEntry = ({ imagePost, editable }: Props) => {
   }, [imagePost]);
 
   return (
-    <Card sx={{}}>
+    <Card>
       <CardContent>
         <Box>
           <img
@@ -34,14 +34,14 @@ const ImagePostEntry = ({ imagePost, editable }: Props) => {
         </Box>
         <Typography>Description: {imagePost.description} </Typography>
         <Typography>
-          Author: {imagePost.author.firstName} ${imagePost.author.lastName}
+          Author: {imagePost.author.firstName} {imagePost.author.lastName}
         </Typography>
         <Typography>
-          Posted on: {publicationDateTime.toLocaleDateString()} at $
+          Posted on: {publicationDateTime.toLocaleDateString()} at{" "}
           {publicationDateTime.toLocaleTimeString()}
         </Typography>
         <Typography>
-          Likes: {imagePost.likes.length} ${imagePost.author.lastName}
+          Likes: {imagePost.likes.length} {imagePost.author.lastName}
         </Typography>
       </CardContent>
     </Card>

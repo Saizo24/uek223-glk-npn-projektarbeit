@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { ImagePost } from "../../../types/models/ImagePost.model";
 import Box from "@mui/material/Box";
 import ImagePostEntry from "../../molecules/imagePost/ImagePostEntry";
-import MySearchBar from "../../molecules/SearchBar/SearchBar";
+import SearchBar from "../../molecules/SearchBar/SearchBar";
+import { Button } from "@mui/material";
 
 type Props = {
   imagePostList: ImagePost[];
@@ -18,11 +19,27 @@ const ImagePostBlog = ({ imagePostList, postsEditable }: Props) => {
   }, [imagePostList]);
 
   return (
-    <Box>
-      <MySearchBar
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        rowGap: 2,
+        mb: 1,
+      }}
+    >
+      <SearchBar
         searchItem="User"
         searchValue={searchValue}
         setSearchValue={setSearchValue}
+        sx={{
+          width: "450px",
+          position: "sticky",
+          top: 5,
+          left: 0,
+          display: "flex",
+        }}
       />
       {imagePosts
         .filter((post) => {
@@ -33,6 +50,10 @@ const ImagePostBlog = ({ imagePostList, postsEditable }: Props) => {
         .map((post) => {
           return <ImagePostEntry imagePost={post} editable={postsEditable} />;
         })}
+
+      <Button variant="contained" onClick={() => {}}>
+        Show more Entries
+      </Button>
     </Box>
   );
 };
