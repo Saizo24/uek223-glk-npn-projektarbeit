@@ -1,9 +1,9 @@
-import React, { useContext } from 'react';
-import { Navigate } from 'react-router-dom';
-import * as jwt from 'jsonwebtoken';
-import ActiveUserContext from '../Contexts/ActiveUserContext';
-import AuthorityService from '../Services/AuthorityService';
-import { Authority } from '../types/models/Authority.model';
+import React, { useContext } from "react";
+import { Navigate } from "react-router-dom";
+import * as jwt from "jsonwebtoken";
+import ActiveUserContext from "../Contexts/ActiveUserContext";
+import AuthorityService from "../Services/AuthorityService";
+import { Authority } from "../types/models/Authority.model";
 
 interface Props {
   element: React.ReactElement;
@@ -26,12 +26,12 @@ const PrivateRoute: React.FC<Props> = ({
    * If all of the above is true the user is seen as logged in.
    */
   const isLoggedIn = () => {
-    let tokenString = localStorage.getItem('token');
+    let tokenString = localStorage.getItem("token");
     if (!tokenString) {
-      console.error('no token found');
+      console.error("no token found");
       return false;
     }
-    tokenString = tokenString.replace('Bearer ', '');
+    tokenString = tokenString.replace("Bearer ", "");
     const token: JWTType = jwt.decode(tokenString) as JWTType;
     // Check if token does not exist or doesn't have an expiration claim or is expired.
     if (!token || !token.exp || token.exp < Date.now() / 1000) {
@@ -45,21 +45,22 @@ const PrivateRoute: React.FC<Props> = ({
    */
   if (!isLoggedIn()) {
     activeUserContext.logout();
-    return <Navigate to='/login' replace={true} />;
+    return <Navigate to="/login" replace={true} />;
   }
   /**
    * Check if the active user has at least 1 of the needed authorities.
    * If no authorities are needed true is returned.
    */
   const hasNeededAuthorities =
-    authorities.length === 0 || authorities.some(AuthorityService.hasAuthority);
+    authorities.length === 0 ||
+    authorities.some(AuthorityService.hasAuthority.toString);
 
   /**
    * If the user doesn't possess the needed authorities Redirect the user to
    * /unauthorized
    */
   if (!hasNeededAuthorities) {
-    return <Navigate to='/unauthorized' replace={true} />;
+    return <Navigate to="/unauthorized" replace={true} />;
   }
 
   // All checks passed

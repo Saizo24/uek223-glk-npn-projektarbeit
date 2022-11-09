@@ -1,6 +1,7 @@
 package com.example.demo.domain.imagepost.dto;
 
 import com.example.demo.core.generic.ExtendedDTO;
+import com.example.demo.domain.user.User;
 import com.example.demo.domain.user.dto.UserDTO;
 
 
@@ -31,6 +32,7 @@ public class ImagePostDTO extends ExtendedDTO {
         this.description = description;
         this.publicationTime = publicationTime;
         this.likes = likes;
+        this.author = author;
     }
 
     public ImagePostDTO() {
