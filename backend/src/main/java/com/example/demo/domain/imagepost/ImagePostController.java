@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
 
 @Validated
@@ -37,7 +36,7 @@ public class ImagePostController {
 
     @GetMapping({"", "/", "/{page}"})
     @PreAuthorize("hasAuthority('READ')")
-    public ResponseEntity<List<ImagePostDTO>> retrieveAll(@PathVariable Optional<int> page) {
+    public ResponseEntity<List<ImagePostDTO>> retrieveAll(@PathVariable Optional<Integer> page) {
         int currentPage = page != null ? DEFAULT_PAGE_NUMBER : page.get();
         List<ImagePost> imagePosts = imagePostService.findAll(PageRequest.of(currentPage, DEFAULT_PAGE_LIMIT, Sort.by("publicationTime").descending()));
         return new ResponseEntity<>(imagePostMapper.toDTOs(imagePosts), HttpStatus.OK);
@@ -45,9 +44,9 @@ public class ImagePostController {
 
     @GetMapping("/{username}/{page}")
     @PreAuthorize("hasAuthority('READ')")
-    public ResponseEntity<Set<ImagePostDTO>> retrieveAllImagesByUser(@PathVariable String username, @PathVariable Optional<int> page) {
+    public ResponseEntity<List<ImagePostDTO>> retrieveAllImagesByUser(@PathVariable String username, @PathVariable Optional<Integer> page) {
         int currentPage = page != null ? DEFAULT_PAGE_LIMIT : page.get();
-        Set<ImagePost> imagePosts = imagePostService.retrieveAllImagesByUser(username, PageRequest.of(currentPage, DEFAULT_PAGE_LIMIT, Sort.by("publicationTime").descending()));
+        List<ImagePost> imagePosts = imagePostService.retrieveAllImagesByUser(username, PageRequest.of(currentPage, DEFAULT_PAGE_LIMIT, Sort.by("publicationTime").descending()));
         return new ResponseEntity<>(imagePostMapper.toDTOs(imagePosts), HttpStatus.OK);
     }
 
