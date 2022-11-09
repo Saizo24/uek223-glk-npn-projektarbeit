@@ -9,20 +9,28 @@ import NavBar from "../../organisms/NavBar/NavBar";
 export default function ProfilePage() {
   const [imagePosts, setImagePosts] = useState<ImagePost[]>([]);
   const activeUserContext = useContext(ActiveUserContext);
-  const [pageNumber, setPageNumber] = useState<number>(0);
   const activeUser = activeUserContext.user;
+  const [pageNumber, setPageNumber] = useState<number>(0)
+  const [canLoadMorePosts, setCanLoadMorePosts] = useState<boolean>(true)
+
   useEffect(() => {
-    ImagePostService()
-      .getAllImagePostsByUser(activeUser ? activeUser.email : "", pageNumber)
-      .then((data) => {
-        console.log(data);
-        setImagePosts(data);
-      });
+    if (activeUser) {
+      ImagePostService()
+        .getAllImagePostsByUser(activeUser.email, pageNumber)
+        .then((data) => {
+          if (data.length === 0) {
+            setCanLoadMorePosts(false)
+          }
+          const newImagePosts: ImagePost[] = imagePosts.concat(data)
+          setImagePosts(newImagePosts);
+        });
+    }
   }, [pageNumber]);
 
   return (
     <div>
       <NavBar pageName="Profile" />
+      <ImagePostBlog imagePostList={imagePosts} postsEditable={false} pageNumber={pageNumber} setPageNumber={setPageNumber} canLoadMorePosts={canLoadMorePosts} />
       <BottomBar />
     </div>
   );

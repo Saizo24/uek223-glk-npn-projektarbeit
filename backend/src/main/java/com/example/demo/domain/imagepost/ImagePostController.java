@@ -34,7 +34,7 @@ public class ImagePostController {
         this.imagePostMapper = imagePostMapper;
     }
 
-    @GetMapping({"", "/", "/{page}"})
+    @GetMapping({"/{page}"})
     @PreAuthorize("hasAuthority('READ')")
     public ResponseEntity<List<ImagePostDTO>> retrieveAll(@PathVariable Optional<Integer> page) {
         int currentPage = page != null ? DEFAULT_PAGE_NUMBER : page.get();

@@ -8,9 +8,12 @@ import { Button } from "@mui/material";
 type Props = {
   imagePostList: ImagePost[];
   postsEditable: boolean;
+  pageNumber: number;
+  setPageNumber: Function;
+  canLoadMorePosts: boolean;
 };
 
-const ImagePostBlog = ({ imagePostList, postsEditable }: Props) => {
+const ImagePostBlog = ({ imagePostList, postsEditable, pageNumber, setPageNumber, canLoadMorePosts }: Props) => {
   const [imagePosts, setImagePosts] = useState(imagePostList);
   const [searchValue, setSearchValue] = useState("");
 
@@ -51,7 +54,7 @@ const ImagePostBlog = ({ imagePostList, postsEditable }: Props) => {
           return <ImagePostEntry imagePost={post} editable={postsEditable} />;
         })}
 
-      <Button variant="contained" onClick={() => {}}>
+      <Button variant="contained" onClick={() => { setPageNumber(pageNumber + 1) }} disabled={!canLoadMorePosts} >
         Show more Entries
       </Button>
     </Box>

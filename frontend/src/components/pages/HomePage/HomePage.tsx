@@ -8,19 +8,28 @@ import NavBar from "../../organisms/NavBar/NavBar";
 
 export default function HomePage() {
   const [imagePosts, setImagePosts] = useState<ImagePost[]>([]);
+  const [pageNumber, setPageNumber] = useState<number>(0)
+  const [canLoadMorePosts, setCanLoadMorePosts] = useState<boolean>(true)
+
   useEffect(() => {
     ImagePostService()
-      .getAllImagePosts()
+      .getAllImagePosts(pageNumber)
       .then((data) => {
-        setImagePosts(data);
+        if (data.length === 0) {
+          setCanLoadMorePosts(false)
+        }
+        const newImagePosts: ImagePost[] = imagePosts.concat(data)
+        setImagePosts(newImagePosts);
       });
-  }, []);
+  }, [pageNumber]);
 
   return (
     <Box>
       <NavBar pageName="Homepage" />
-      <ImagePostBlog imagePostList={imagePosts} postsEditable={false} />
+      <ImagePostBlog imagePostList={imagePosts} postsEditable={false} pageNumber={pageNumber} setPageNumber={setPageNumber} canLoadMorePosts={canLoadMorePosts} />
       <BottomBar />
     </Box>
   );
 }
+
+
