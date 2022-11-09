@@ -2,8 +2,10 @@ package com.example.demo.domain.imagepost;
 
 import com.example.demo.core.generic.ExtendedEntity;
 import com.example.demo.domain.user.User;
+import com.example.demo.domain.user.dto.UserAuthorDTO;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -30,9 +32,10 @@ public class ImagePost extends ExtendedEntity {
 
     @ManyToOne()
     @JoinColumn(name = "author_id", referencedColumnName = "id")
-    private User author;
+    @Valid
+    private UserAuthorDTO author;
 
-    public ImagePost(UUID id, String imageURL, String description, LocalDateTime publicationTime, Set<User> likes, User author) {
+    public ImagePost(UUID id, String imageURL, String description, LocalDateTime publicationTime, Set<User> likes, UserAuthorDTO author) {
         super(id);
         this.imageURL = imageURL;
         this.description = description;
@@ -77,11 +80,11 @@ public class ImagePost extends ExtendedEntity {
         this.likes = likes;
     }
 
-    public User getAuthor() {
+    public UserAuthorDTO getAuthor() {
         return author;
     }
 
-    public void setAuthor(User author) {
+    public void setAuthor(UserAuthorDTO author) {
         this.author = author;
     }
 }

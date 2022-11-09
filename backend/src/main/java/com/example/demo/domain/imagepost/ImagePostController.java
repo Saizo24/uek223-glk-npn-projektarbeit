@@ -7,17 +7,18 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
+import java.util.UUID;
 
 @Validated
 @RestController
-@RequestMapping("/imagePost")
+@RequestMapping("/imagepost")
 public class ImagePostController {
 
     private final ImagePostService imagePostService;
@@ -30,8 +31,26 @@ public class ImagePostController {
     }
 
     @GetMapping({"", "/", "/{page}/{limit}"})
+    @PreAuthorize("hasAuthority('READ')")
     public ResponseEntity<List<ImagePostDTO>> retrieveAll(@PathVariable int page, @PathVariable int limit) {
         List<ImagePost> imagePosts = imagePostService.findAll(PageRequest.of(page, limit, Sort.by("publicationTime").descending()));
         return new ResponseEntity<>(imagePostMapper.toDTOs(imagePosts), HttpStatus.OK);
+    }
+
+    @Transactional
+    @PostMapping("/")
+    @PreAuthorize("hasAuthority('READ')")
+    public ResponseEntity<ImagePostDTO> createNewPost(@Valid @RequestBody ImagePostDTO imagePostDTO, @Valid @RequestBody String username) {
+        ImagePost imagePost = imagePostService.createNewPost(imagePostMapper.fromDTO(imagePostDTO), username);
+        return new ResponseEntity<>(imagePostMapper.toDTO(imagePost), HttpStatus.CREATED);
+    }
+
+    @Transactional
+    @PutMapping("/")
+    @PreAuthorize("hasAuthority('USER_MODIFY') || @userPermissionEvaluator.hasSameId(authentication.principal.user, id)")
+    public ResponseEntity<ImagePostDTO> updatePostById(@PathVariable UUID id, @Valid @RequestBody ImagePostDTO imagePostDTO) {
+        ImagePost imagePost = imagePostService.updateById(id, imagePostMapper.fromDTO(imagePostDTO));
+        return new ResponseEntity<>(imagePostMapper.toDTO(imagePost), HttpStatus.OK);
+
     }
 }
