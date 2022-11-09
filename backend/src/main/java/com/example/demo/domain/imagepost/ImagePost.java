@@ -33,9 +33,9 @@ public class ImagePost extends ExtendedEntity {
     @ManyToOne()
     @JoinColumn(name = "author_id", referencedColumnName = "id")
     @Valid
-    private UserAuthorDTO author;
+    private User author;
 
-    public ImagePost(UUID id, String imageURL, String description, LocalDateTime publicationTime, Set<User> likes, UserAuthorDTO author) {
+    public ImagePost(UUID id, String imageURL, String description, LocalDateTime publicationTime, Set<User> likes, User author) {
         super(id);
         this.imageURL = imageURL;
         this.description = description;
@@ -80,11 +80,11 @@ public class ImagePost extends ExtendedEntity {
         this.likes = likes;
     }
 
-    public UserAuthorDTO getAuthor() {
+    public User getAuthor() {
         return author;
     }
 
-    public void setAuthor(UserAuthorDTO author) {
+    public void setAuthor(User author) {
         this.author = author;
     }
 }

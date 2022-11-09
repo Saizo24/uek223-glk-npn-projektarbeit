@@ -21,8 +21,7 @@ export default function ProfilePage() {
 
   return (
     <div>
-      <NavBar pageName="Your Blog (definitely not Twitter)" />
-      <ImagePostBlog imagePostList={imagePosts} postsEditable={false} />
+      <NavBar pageName="Profile" />
       <BottomBar />
     </div>
   );

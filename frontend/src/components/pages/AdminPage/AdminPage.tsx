@@ -18,7 +18,7 @@ export default function AdminPage() {
 
   return (
     <div>
-      <NavBar pageName="Your Admin Page (definitely not Twitter again)" />
+      <NavBar pageName="Admin Page" />
       <ImagePostBlog imagePostList={imagePosts} postsEditable={false} />
       <BottomBar />
     </div>

@@ -13,19 +13,17 @@ import org.springframework.stereotype.Service;
 public class ImagePostServiceImpl extends ExtendedServiceImpl<ImagePost> implements ImagePostService {
 
     private UserService userService;
-    private UserMapper userMapper;
 
     @Autowired
-    public ImagePostServiceImpl(ExtendedRepository<ImagePost> repository, Logger logger, UserService userService, UserMapper userMapper) {
+    public ImagePostServiceImpl(ExtendedRepository<ImagePost> repository, Logger logger, UserService userService) {
             super(repository, logger);
             this.userService = userService;
-            this.userMapper = userMapper;
         }
 
     @Override
     public ImagePost createNewPost(ImagePost imagePost, String username) {
         User user = userService.findByUsername(username);
-        imagePost.setAuthor(userMapper.toUserAuthorDTO(user));
+        imagePost.setAuthor(user);
         return repository.save(imagePost);
     }
 }

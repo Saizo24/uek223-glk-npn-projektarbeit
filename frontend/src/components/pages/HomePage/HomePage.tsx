@@ -17,7 +17,7 @@ export default function HomePage() {
 
   return (
     <div>
-      <NavBar pageName="Your Blog (definitely not Twitter)" />
+      <NavBar pageName="Homepage" />
       <ImagePostBlog imagePostList={imagePosts} postsEditable={false} />
       <BottomBar />
     </div>
