@@ -71,6 +71,7 @@ public class JWTAuthenticationFilter extends AbstractAuthenticationProcessingFil
                                           Authentication authResult) {
     response.addHeader(HttpHeaders.AUTHORIZATION, AuthorizationSchemas.BEARER + " " + generateToken(authResult));
     UserDetailsImpl userDetailsImpl = (UserDetailsImpl) authResult.getPrincipal();
+    userDetailsImpl.user().setPassword(null);
     try {
       response.getWriter().write(new ObjectMapper().writeValueAsString(userDetailsImpl.user()));
     } catch (IOException e) {

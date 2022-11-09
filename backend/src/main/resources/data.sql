@@ -1,8 +1,8 @@
 --USERS
 insert into users (id, email,first_name,last_name, password)
-values ('ba804cb9-fa14-42a5-afaf-be488742fc54', 'admin@example.com', 'James','Bond', '$10$zh8kOxBq.1YWmNWQn6iFqejDyjIxv8dacqclYxC0WKqTEb6f2Y0Nm' ),
-('0d8fa44c-54fd-4cd0-ace9-2a7da57992de', 'user@example.com', 'Tyler','Durden', '$10$zh8kOxBq.1YWmNWQn6iFqejDyjIxv8dacqclYxC0WKqTEb6f2Y0Nm'),
-('8e834c6e-6783-4a0e-ac1b-e390a6deae9f', 'giga@chad.max', 'GianGantos', 'Maximus', '$10$zh8kOxBq.1YWmNWQn6iFqejDyjIxv8dacqclYxC0WKqTEb6f2Y0Nm')
+values ('ba804cb9-fa14-42a5-afaf-be488742fc54', 'admin@example.com', 'James','Bond', '$2a$10$p/pXIAs28xf.7Qt1EGKKGu7q1Mt7PyHFMdwKb3cNi6QFrJmn51LPS' ),
+('0d8fa44c-54fd-4cd0-ace9-2a7da57992de', 'user@example.com', 'Tyler','Durden', '$2a$10$p/pXIAs28xf.7Qt1EGKKGu7q1Mt7PyHFMdwKb3cNi6QFrJmn51LPS'),
+('8e834c6e-6783-4a0e-ac1b-e390a6deae9f', 'giga@chad.max', 'GianGantos', 'Maximus', '$2a$10$p/pXIAs28xf.7Qt1EGKKGu7q1Mt7PyHFMdwKb3cNi6QFrJmn51LPS')
  ON CONFLICT DO NOTHING;
 
 
