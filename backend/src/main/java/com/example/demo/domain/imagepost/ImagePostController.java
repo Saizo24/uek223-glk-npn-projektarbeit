@@ -14,12 +14,17 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 @Validated
 @RestController
 @RequestMapping("/imagepost")
 public class ImagePostController {
+
+    public static final int DEFAULT_PAGE_NUMBER = 0;
+    public static final int DEFAULT_PAGE_LIMIT = 5;
 
     private final ImagePostService imagePostService;
     private final ImagePostMapper imagePostMapper;
@@ -30,10 +35,19 @@ public class ImagePostController {
         this.imagePostMapper = imagePostMapper;
     }
 
-    @GetMapping({"", "/", "/{page}/{limit}"})
+    @GetMapping({"", "/", "/{page}"})
     @PreAuthorize("hasAuthority('READ')")
-    public ResponseEntity<List<ImagePostDTO>> retrieveAll(@PathVariable int page, @PathVariable int limit) {
-        List<ImagePost> imagePosts = imagePostService.findAll(PageRequest.of(page, limit, Sort.by("publicationTime").descending()));
+    public ResponseEntity<List<ImagePostDTO>> retrieveAll(@PathVariable Optional<int> page) {
+        int currentPage = page != null ? DEFAULT_PAGE_NUMBER : page.get();
+        List<ImagePost> imagePosts = imagePostService.findAll(PageRequest.of(currentPage, DEFAULT_PAGE_LIMIT, Sort.by("publicationTime").descending()));
+        return new ResponseEntity<>(imagePostMapper.toDTOs(imagePosts), HttpStatus.OK);
+    }
+
+    @GetMapping("/{username}/{page}")
+    @PreAuthorize("hasAuthority('READ')")
+    public ResponseEntity<Set<ImagePostDTO>> retrieveAllImagesByUser(@PathVariable String username, @PathVariable Optional<int> page) {
+        int currentPage = page != null ? DEFAULT_PAGE_LIMIT : page.get();
+        Set<ImagePost> imagePosts = imagePostService.retrieveAllImagesByUser(username, PageRequest.of(currentPage, DEFAULT_PAGE_LIMIT, Sort.by("publicationTime").descending()));
         return new ResponseEntity<>(imagePostMapper.toDTOs(imagePosts), HttpStatus.OK);
     }
 
