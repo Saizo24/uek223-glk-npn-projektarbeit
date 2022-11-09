@@ -19,11 +19,13 @@ import java.util.Set;
 public class ImagePostServiceImpl extends ExtendedServiceImpl<ImagePost> implements ImagePostService {
 
     private UserService userService;
+    private UserMapper userMapper;
 
     @Autowired
-    public ImagePostServiceImpl(ExtendedRepository<ImagePost> repository, Logger logger, UserService userService) {
+    public ImagePostServiceImpl(ExtendedRepository<ImagePost> repository, Logger logger, UserService userService, UserMapper userMapper) {
             super(repository, logger);
             this.userService = userService;
+            this.userMapper = userMapper;
         }
 
     @Override
