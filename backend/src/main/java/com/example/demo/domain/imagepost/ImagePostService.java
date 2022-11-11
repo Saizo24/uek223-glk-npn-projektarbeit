@@ -11,4 +11,7 @@ public interface ImagePostService extends ExtendedService<ImagePost> {
 
   List<ImagePost> retrieveAllImagesByUser(String username, Pageable pageable);
 
+  ImagePost likePostByUsername(ImagePost imagePost, String username);
+
+  ImagePost unlikePostByUsername(ImagePost imagePost, String username);
 }

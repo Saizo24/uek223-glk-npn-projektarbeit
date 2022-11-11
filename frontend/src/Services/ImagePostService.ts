@@ -1,16 +1,33 @@
 import api from "../config/Api";
+import { ImagePost } from "../types/models/ImagePost.model";
+
+const ENDPOINT_PREFIX = "/imagepost"
 
 export const ImagePostService = () => ({
     getAllImagePosts: async (page: number) => {
-        const data = await api.get(`/imagepost/${page}`).catch((error) => {
+        const data = await api.get(`${ENDPOINT_PREFIX}/${page}`).catch((error) => {
             throw error;
         })
         return data.data;
     },
 
     getAllImagePostsByUser: async (username: string, page: number) => {
-        const data = await api.get(`/imagepost/${username}/${page}`).catch((error) => {
+        const data = await api.get(`${ENDPOINT_PREFIX}/${username}/${page}`).catch((error) => {
             throw error;
+        })
+        return data.data;
+    },
+
+    likePostByUsername: async (imagePost: ImagePost, username: string) => {
+        const data = await api.put(`${ENDPOINT_PREFIX}/like/${username}`, imagePost).catch((error) => {
+            throw error
+        })
+        return data.data;
+    },
+
+    unlikePostByUsername: async (imagePost: ImagePost, username: string) => {
+        const data = await api.put(`${ENDPOINT_PREFIX}/unlike/${username}`, imagePost).catch((error) => {
+            throw error
         })
         return data.data;
     }

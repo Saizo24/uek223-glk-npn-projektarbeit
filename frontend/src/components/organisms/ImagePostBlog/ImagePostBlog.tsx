@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ImagePost } from "../../../types/models/ImagePost.model";
 import Box from "@mui/material/Box";
 import ImagePostEntry from "../../molecules/imagePost/ImagePostEntry";
@@ -39,9 +39,10 @@ const ImagePostBlog = ({ imagePostList, postsEditable, pageNumber, setPageNumber
         sx={{
           width: "450px",
           position: "sticky",
-          top: 5,
+          top: "72px",
           left: 0,
           display: "flex",
+          zIndex: 10,
         }}
       />
       {imagePosts
@@ -53,9 +54,8 @@ const ImagePostBlog = ({ imagePostList, postsEditable, pageNumber, setPageNumber
         .map((post) => {
           return <ImagePostEntry imagePost={post} editable={postsEditable} />;
         })}
-
       <Button variant="contained" onClick={() => { setPageNumber(pageNumber + 1) }} disabled={!canLoadMorePosts} >
-        Show more Entries
+        {canLoadMorePosts ? "Show more Entries" : "No more posts"}
       </Button>
     </Box>
   );

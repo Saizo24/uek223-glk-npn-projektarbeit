@@ -18,12 +18,13 @@ export default function NavBar({ pageName }: Props) {
   };
 
   return (
-    <Box sx={{ display: "flex", flex: 1 }}>
+    <Box sx={{ display: "flex", flex: 1, position: "sticky", top: 0, left: 0, flexDirection: "row" }}>
       <AppBar
         position="static"
-        sx={{ minHeight: "64px", justifyContent: "center", flex: 1 }}
+        sx={{ minHeight: "64px", justifyContent: "center", flex: 1, display: "flex", flexDirection: "row" }}
       >
-        <Toolbar>
+        <Toolbar
+          sx={{ maxWidth: "1920px", flex: 1 }}>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             {pageName}
           </Typography>

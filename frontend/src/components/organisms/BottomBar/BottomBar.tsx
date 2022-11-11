@@ -11,9 +11,10 @@ export default function BottomBar() {
     <Box sx={{ display: "flex", flex: 1 }}>
       <AppBar
         position="sticky"
-        sx={{ minHeight: "64px", justifyContent: "center", flex: 1, bottom: 0 }}
+        sx={{ minHeight: "64px", justifyContent: "center", flex: 1, bottom: 0, display: "flex", flexDirection: "row" }}
       >
-        <Toolbar>
+        <Toolbar
+          sx={{ maxWidth: "1920px", flex: 1 }}>
           <CopyRightIcon sx={{ mr: 2 }} /> Ngoc-Phuc Nguyen & Gian-Luca
           Kunfermann
         </Toolbar>

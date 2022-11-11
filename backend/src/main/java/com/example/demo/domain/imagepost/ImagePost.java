@@ -3,6 +3,8 @@ package com.example.demo.domain.imagepost;
 import com.example.demo.core.generic.ExtendedEntity;
 import com.example.demo.domain.user.User;
 import com.example.demo.domain.user.dto.UserAuthorDTO;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.Valid;
@@ -28,6 +30,7 @@ public class ImagePost extends ExtendedEntity {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "image_post_user", joinColumns = @JoinColumn(name = "image_post_id", referencedColumnName = "id"),
         inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<User> likes = new HashSet<>();
 
     @ManyToOne()
