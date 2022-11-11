@@ -30,6 +30,13 @@ export const ImagePostService = () => ({
             throw error
         })
         return data.data;
+    },
+
+    createNewPost: async () => {
+        const data = await api.post(`${ENDPOINT_PREFIX}/`).catch((error) => {
+            throw error;
+        })
+        return data.data;
     }
 });
 

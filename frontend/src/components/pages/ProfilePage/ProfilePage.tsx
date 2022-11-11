@@ -29,6 +29,12 @@ export default function ProfilePage() {
     }
   }, [pageNumber]);
 
+  useEffect(() => {
+    if (activeUser) {
+      ImagePostService().createNewPost();
+    }
+  }, []);
+
   return (
     <div>
       <NavBar pageName="Profile" />
