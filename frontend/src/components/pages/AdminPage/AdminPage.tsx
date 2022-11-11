@@ -1,38 +1,51 @@
-import { Tabs, Tab } from '@mui/material'
-import Box from '@mui/material/Box'
-import React, { useState } from 'react'
-import ImagePostBlog from '../../organisms/ImagePostBlog/ImagePostBlog'
-import NavBar from '../../organisms/NavBar/NavBar'
-import UserList from '../../organisms/UserList/UserList'
+import React, { useEffect, useState } from "react";
+import { ImagePostService } from "../../../Services/ImagePostService";
+import { ImagePost } from "../../../types/models/ImagePost.model";
+import BottomBar from "../../organisms/BottomBar/BottomBar";
+import ImagePostBlog from "../../organisms/ImagePostBlog/ImagePostBlog";
+import NavBar from "../../organisms/NavBar/NavBar";
 
-type Props = {}
+export default function AdminPage() {
+  const [imagePosts, setImagePosts] = useState<ImagePost[]>([]);
+  const [pageNumber, setPageNumber] = useState<number>(0);
+  const [canLoadMorePosts, setCanLoadMorePosts] = useState<boolean>(true);
 
-const AdminPage = (props: Props) => {
-    const [tab, setTab] = useState(AdminTab.BLOG)
-    const [imagePosts, setImagePosts] = useState([])
+  useEffect(() => {
+    ImagePostService()
+      .getAllImagePosts(pageNumber)
+      .then((data) => {
+        if (data.length === 0) {
+          setCanLoadMorePosts(false);
+        }
+        const newImagePosts: ImagePost[] = imagePosts.concat(data);
+        setImagePosts(newImagePosts);
+      });
+  }, [pageNumber]);
 
-    return (
-        <Box>
-            <NavBar pageName='Admininstration' />
-            <Tabs>
-                <Tab label="Blogs" />
-                <Tab label="User" />
-            </Tabs>
-            <Box>
-                {
-                    tab === AdminTab.BLOG ? (
-                        <ImagePostBlog imagePostList={imagePosts} postsEditable={true} />
-                    ) : (
-                        <UserList />
-                    )
-                }
-            </Box>
-        </Box>
-    )
-}
+  return (
+    <div>
+      <NavBar pageName="Admin Page" />
+      <Tabs>
+        <Tab label="Blogs" />
+        <Tab label="User" />
+      </Tabs>
+      <Box>
+        {
+          tab === AdminTab.BLOG ? (
+            <ImagePostBlog
+              imagePostList={imagePosts}
+              postsEditable={true}
+              pageNumber={pageNumber}
+              setPageNumber={setPageNumber}
+              canLoadMorePosts={canLoadMorePosts}
+              isProfile={false}
+            />) : (
+            <UserList />
+          )
+        }
+      </Box>
 
-export default AdminPage
-
-enum AdminTab {
-    BLOG, USER
+      <BottomBar />
+    </div>
+  );
 }

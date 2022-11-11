@@ -2,8 +2,12 @@ package com.example.demo.domain.imagepost;
 
 import com.example.demo.core.generic.ExtendedEntity;
 import com.example.demo.domain.user.User;
+import com.example.demo.domain.user.dto.UserAuthorDTO;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -24,12 +28,14 @@ public class ImagePost extends ExtendedEntity {
 
     @Column()
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "image_post_user", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-        inverseJoinColumns = @JoinColumn(name = "imagePost_id", referencedColumnName = "id"))
+    @JoinTable(name = "image_post_user", joinColumns = @JoinColumn(name = "image_post_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<User> likes = new HashSet<>();
 
     @ManyToOne()
     @JoinColumn(name = "author_id", referencedColumnName = "id")
+    @Valid
     private User author;
 
     public ImagePost(UUID id, String imageURL, String description, LocalDateTime publicationTime, Set<User> likes, User author) {
