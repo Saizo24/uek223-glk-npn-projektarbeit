@@ -1,4 +1,4 @@
-import { Card, CardContent, Dialog, DialogActions, IconButton, Tooltip, Typography } from "@mui/material";
+import { Card, CardContent, Dialog, DialogActions, IconButton, Tooltip, Typography, Button } from "@mui/material";
 import Box from "@mui/material/Box";
 import React, { useEffect, useState, useContext } from "react";
 import { ImagePost } from "../../../types/models/ImagePost.model";
@@ -107,6 +107,9 @@ const ImagePostEntry = ({ imagePost, editable }: Props) => {
                 <IconButton onClick={() => { likePost() }}>
                     {isLiked ? <ThumbUp /> : <ThumbUpOutlinedIcon />}
                 </IconButton>
+                <Button variant="contained" sx={{ display: editable ? undefined : "none" }}>
+                    Edit
+                </Button>
             </CardContent>
         </Card>
     );

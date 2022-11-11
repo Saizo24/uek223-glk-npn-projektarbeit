@@ -32,8 +32,6 @@ const Login = () => {
   const handleSubmit = (values: { email: string; password: string }) => {
     login(values.email.toLowerCase(), values.password)
       .then(() => {
-        console.log(values);
-
         navigate("/homepage");
       })
       .catch((error) => {

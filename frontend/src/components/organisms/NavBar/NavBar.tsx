@@ -27,6 +27,7 @@ export default function NavBar({ pageName }: Props) {
         top: 0,
         left: 0,
         flexDirection: "row",
+        zIndex: 10,
       }}
     >
       <AppBar
@@ -48,7 +49,7 @@ export default function NavBar({ pageName }: Props) {
             onClick={() => navigate("/homepage")}
             disabled={visible}
           >
-            {pageName === "Someone's Blog" ? "" : "Homepage"}
+            {user && user.roles.some((role) => role.name === "ADMIN") ? "Admin Page" : "Homepage"}
           </Button>
           <Button
             color="inherit"
