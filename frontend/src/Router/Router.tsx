@@ -46,7 +46,7 @@ const Router = () => {
         }
       />
       <Route
-        path={`/users/${user?.id}`}
+        path={`/users/:userid`}
         element={
           <PrivateRoute
             authorities={[

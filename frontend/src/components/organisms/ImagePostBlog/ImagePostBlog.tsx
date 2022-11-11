@@ -44,15 +44,16 @@ const ImagePostBlog = ({
         ""
       ) : (
         <SearchBar
-          searchItem="User"
+          searchItem="Author"
           searchValue={searchValue}
           setSearchValue={setSearchValue}
           sx={{
             width: "450px",
             position: "sticky",
-            top: 5,
+            top: "72px",
             left: 0,
             display: "flex",
+            zIndex: 10,
           }}
         />
       )}

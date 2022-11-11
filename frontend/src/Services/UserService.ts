@@ -1,32 +1,36 @@
 import api from '../config/Api';
 import { User } from '../types/models/User.model';
 
+const ENDPOINT_PREFIX = "/user"
+
 const UserService = {
   getUser: (id: string) => {
-    return api.get(`/users/${id}`);
+    return api.get(`${ENDPOINT_PREFIX}/id/${id}`);
   },
   updateUser: (user: User) => {
-    return api.put(`/users/${user.id}`, user);
+    return api.put(`${ENDPOINT_PREFIX}/${user.id}`, user);
   },
 
   addUser: (user: User) => {
-    return api.post('/users/', user).then((res) => {
+    return api.post(`${ENDPOINT_PREFIX}/`, user).then((res) => {
       return res.data;
     });
   },
   addAllUsers: (users: User[]) => {
-    return api.post('/users/list', users);
+    return api.post(`${ENDPOINT_PREFIX}/list`, users);
   },
-  getAllUsers: () => {
-    return api.get(`/users`);
+  getAllUsers: (pageNumber: number) => {
+    return api.get(`${ENDPOINT_PREFIX}/page/${pageNumber}`).then((res) => {
+      return res.data
+    });
   },
 
   deleteUser: (id: string) => {
-    return api.delete(`/users/${id}`);
+    return api.delete(`${ENDPOINT_PREFIX}/${id}`);
   },
 
   getUserByID: async (userID: string): Promise<User> => {
-    const { data } = await api.get<User>(`/users/${userID}`);
+    const { data } = await api.get<User>(`${ENDPOINT_PREFIX}/${userID}`);
     return data;
   },
 };
