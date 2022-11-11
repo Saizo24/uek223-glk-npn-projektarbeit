@@ -12,7 +12,7 @@ export default function NavBar({ pageName }: Props) {
   const navigate = useNavigate();
   const { logout } = useContext(ActiveUserContext);
   const { user } = useContext(ActiveUserContext);
-  const visible: boolean = pageName === "Someone's Blog" ? true : false;
+  const visible: boolean = pageName === "Someone's Blog" ? false : true;
 
   const handleSubmit = () => {
     logout();
@@ -47,18 +47,22 @@ export default function NavBar({ pageName }: Props) {
           <Button
             color="inherit"
             onClick={() => navigate("/homepage")}
-            disabled={visible}
+            sx={{ display: visible ? undefined : "none" }}
           >
             {user && user.roles.some((role) => role.name === "ADMIN") ? "Admin Page" : "Homepage"}
           </Button>
           <Button
             color="inherit"
             onClick={() => navigate(`/users/${user?.id}`)}
-            disabled={visible}
+            sx={{ display: visible ? undefined : "none" }}
           >
             {pageName === "Someone's Blog" ? "" : "Profile"}
           </Button>
-          <Button color="inherit" onClick={handleSubmit} disabled={visible}>
+          <Button
+            color="inherit"
+            onClick={handleSubmit}
+            sx={{ display: visible ? undefined : "none" }}
+          >
             {pageName === "Someone's Blog" ? "" : "Logout"}
           </Button>
         </Toolbar>

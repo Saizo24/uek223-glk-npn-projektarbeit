@@ -1,6 +1,5 @@
-import { Button, IconButton } from "@mui/material";
-import { Formik, FormikHelpers, FormikValues } from "formik";
-import { userInfo } from "os";
+import { Button, IconButton, Box } from "@mui/material";
+import { Formik, FormikHelpers } from "formik";
 import * as yup from "yup";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -8,12 +7,17 @@ import ActiveUserContext from "../../../Contexts/ActiveUserContext";
 import { ImagePostService } from "../../../Services/ImagePostService";
 import UserService from "../../../Services/UserService";
 import { ImagePost } from "../../../types/models/ImagePost.model";
-import { User } from "../../../types/models/User.model";
 import BottomBar from "../../organisms/BottomBar/BottomBar";
 import ImagePostBlog from "../../organisms/ImagePostBlog/ImagePostBlog";
 import NavBar from "../../organisms/NavBar/NavBar";
 import UserDetailsBox from "../../organisms/UserDetailsBox/UserDetailsBox";
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import { Author } from "../../../types/models/Author.model";
+
+interface FormValues {
+  imageURL: string
+  description: string
+}
 
 const validationSchema = yup.object().shape({
   url: yup.string().required("Please enter a link to your picture."),
@@ -22,6 +26,8 @@ const validationSchema = yup.object().shape({
     .required("Please enter a description for your post.")
     .max(200, "Description can only be 200 characters long."),
 });
+
+
 
 export default function ProfilePage() {
   const { userid } = useParams()
@@ -62,42 +68,40 @@ export default function ProfilePage() {
   }, [pageNumber, user]);
 
   return (
-    <div>
+    <Box>
       <NavBar pageName="Profile" />
-      <UserDetailsBox user={activeUser} />
       <Formik
         initialValues={{
-          id: "",
           imageURL: "",
-          description: "",
-          author: activeUser
-            ? {
-              firstName: activeUser.firstName,
-              lastName: activeUser.lastName,
-              email: activeUser.email,
-            }
-            : { firstName: "", lastName: "", email: "" },
-          publicationTime: new Date(),
-          likes: [],
+          description: ""
         }}
         validationSchema={validationSchema}
         onSubmit={(
-          values: ImagePost,
-          formikHelpers: FormikHelpers<ImagePost>
+          values: FormValues,
+          formikHelpers: FormikHelpers<FormValues>
         ) => {
-          ImagePostService().createNewPost(values);
+          const newImagePost: ImagePost = {
+            id: "",
+            imageURL: values.imageURL,
+            description: values.description,
+            author: activeUser ? activeUser as Author : { email: "", firstName: "", lastName: "" },
+            publicationTime: new Date(),
+            likes: []
+          }
+          ImagePostService().createNewPost(newImagePost);
           formikHelpers.setSubmitting(false);
         }}
       ></Formik>
-      <Button onClick={() => { }} variant="outlined" sx={{}}>
-        Add new Post
-      </Button>
+
       <IconButton onClick={() => {
         navigate(-1)
       }}>
         <ArrowBackIosNewIcon />
       </IconButton>
       <UserDetailsBox user={user} />
+      <Button onClick={() => { }} variant="outlined" sx={{}}>
+        Add new Post
+      </Button>
       <ImagePostBlog
         imagePostList={imagePosts}
         postsEditable={true}
@@ -107,6 +111,6 @@ export default function ProfilePage() {
         isProfile={true}
       />
       <BottomBar />
-    </div>
+    </Box>
   );
 }
