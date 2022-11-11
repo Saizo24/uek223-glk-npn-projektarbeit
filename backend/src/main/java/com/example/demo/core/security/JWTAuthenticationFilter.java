@@ -70,6 +70,13 @@ public class JWTAuthenticationFilter extends AbstractAuthenticationProcessingFil
   protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
                                           Authentication authResult) {
     response.addHeader(HttpHeaders.AUTHORIZATION, AuthorizationSchemas.BEARER + " " + generateToken(authResult));
+    UserDetailsImpl userDetailsImpl = (UserDetailsImpl) authResult.getPrincipal();
+    userDetailsImpl.user().setPassword(null);
+    try {
+      response.getWriter().write(new ObjectMapper().writeValueAsString(userDetailsImpl.user()));
+    } catch (IOException e) {
+      JWT_LOGGER.error("Exception on successful Authentication thrown.", e);
+    }
   }
 
   @Override

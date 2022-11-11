@@ -32,3 +32,5 @@ backend/gradlew.bat
 frontend/node_modules
 frontend/package-lock.json
 frontend/yarn.lock
+frontend/.env.local
+frontend/.eslintcache

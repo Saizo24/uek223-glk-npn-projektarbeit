@@ -1,6 +1,7 @@
 package com.example.demo.domain.user;
 
 import com.example.demo.core.generic.ExtendedServiceImpl;
+import lombok.extern.log4j.Log4j2;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
+@Log4j2
 public class UserServiceImpl extends ExtendedServiceImpl<User> implements UserService {
 
   private final PasswordEncoder passwordEncoder;
@@ -24,6 +26,11 @@ public class UserServiceImpl extends ExtendedServiceImpl<User> implements UserSe
     return ((UserRepository) repository).findByEmail(email)
                                         .map(UserDetailsImpl::new)
                                         .orElseThrow(() -> new UsernameNotFoundException(email));
+  }
+
+  @Override
+  public User findByUsername(String email) throws UsernameNotFoundException {
+    return ((UserRepository) repository).findByEmail(email).orElseThrow(() -> new UsernameNotFoundException(email));
   }
 
   @Override
