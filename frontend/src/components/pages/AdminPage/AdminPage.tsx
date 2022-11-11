@@ -7,17 +7,17 @@ import NavBar from "../../organisms/NavBar/NavBar";
 
 export default function AdminPage() {
   const [imagePosts, setImagePosts] = useState<ImagePost[]>([]);
-  const [pageNumber, setPageNumber] = useState<number>(0)
-  const [canLoadMorePosts, setCanLoadMorePosts] = useState<boolean>(true)
+  const [pageNumber, setPageNumber] = useState<number>(0);
+  const [canLoadMorePosts, setCanLoadMorePosts] = useState<boolean>(true);
 
   useEffect(() => {
     ImagePostService()
       .getAllImagePosts(pageNumber)
       .then((data) => {
         if (data.length === 0) {
-          setCanLoadMorePosts(false)
+          setCanLoadMorePosts(false);
         }
-        const newImagePosts: ImagePost[] = imagePosts.concat(data)
+        const newImagePosts: ImagePost[] = imagePosts.concat(data);
         setImagePosts(newImagePosts);
       });
   }, [pageNumber]);
@@ -25,7 +25,14 @@ export default function AdminPage() {
   return (
     <div>
       <NavBar pageName="Admin Page" />
-      <ImagePostBlog imagePostList={imagePosts} postsEditable={false} pageNumber={pageNumber} setPageNumber={setPageNumber} canLoadMorePosts={canLoadMorePosts} />
+      <ImagePostBlog
+        imagePostList={imagePosts}
+        postsEditable={false}
+        pageNumber={pageNumber}
+        setPageNumber={setPageNumber}
+        canLoadMorePosts={canLoadMorePosts}
+        isProfile={false}
+      />
       <BottomBar />
     </div>
   );

@@ -11,9 +11,17 @@ type Props = {
   pageNumber: number;
   setPageNumber: Function;
   canLoadMorePosts: boolean;
+  isProfile: boolean;
 };
 
-const ImagePostBlog = ({ imagePostList, postsEditable, pageNumber, setPageNumber, canLoadMorePosts }: Props) => {
+const ImagePostBlog = ({
+  imagePostList,
+  postsEditable,
+  pageNumber,
+  setPageNumber,
+  canLoadMorePosts,
+  isProfile,
+}: Props) => {
   const [imagePosts, setImagePosts] = useState(imagePostList);
   const [searchValue, setSearchValue] = useState("");
 
@@ -32,19 +40,22 @@ const ImagePostBlog = ({ imagePostList, postsEditable, pageNumber, setPageNumber
         mb: 1,
       }}
     >
-      <SearchBar
-        searchItem="User"
-        searchValue={searchValue}
-        setSearchValue={setSearchValue}
-        sx={{
-          width: "450px",
-          position: "sticky",
-          top: "72px",
-          left: 0,
-          display: "flex",
-          zIndex: 10,
-        }}
-      />
+      {isProfile ? (
+        ""
+      ) : (
+        <SearchBar
+          searchItem="User"
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
+          sx={{
+            width: "450px",
+            position: "sticky",
+            top: 5,
+            left: 0,
+            display: "flex",
+          }}
+        />
+      )}
       {imagePosts
         .filter((post) => {
           return `${post.author.firstName} ${post.author.lastName}`
@@ -54,7 +65,13 @@ const ImagePostBlog = ({ imagePostList, postsEditable, pageNumber, setPageNumber
         .map((post) => {
           return <ImagePostEntry imagePost={post} editable={postsEditable} />;
         })}
-      <Button variant="contained" onClick={() => { setPageNumber(pageNumber + 1) }} disabled={!canLoadMorePosts} >
+      <Button
+        variant="contained"
+        onClick={() => {
+          setPageNumber(pageNumber + 1);
+        }}
+        disabled={!canLoadMorePosts}
+      >
         {canLoadMorePosts ? "Show more Entries" : "No more posts"}
       </Button>
     </Box>

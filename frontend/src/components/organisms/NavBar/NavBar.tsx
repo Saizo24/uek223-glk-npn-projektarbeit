@@ -11,6 +11,7 @@ type Props = {
 export default function NavBar({ pageName }: Props) {
   const navigate = useNavigate();
   const { logout } = useContext(ActiveUserContext);
+  const { user } = useContext(ActiveUserContext);
   const visible: boolean = pageName === "Someone's Blog" ? true : false;
 
   const handleSubmit = () => {
@@ -18,13 +19,27 @@ export default function NavBar({ pageName }: Props) {
   };
 
   return (
-    <Box sx={{ display: "flex", flex: 1, position: "sticky", top: 0, left: 0, flexDirection: "row" }}>
+    <Box
+      sx={{
+        display: "flex",
+        flex: 1,
+        position: "sticky",
+        top: 0,
+        left: 0,
+        flexDirection: "row",
+      }}
+    >
       <AppBar
         position="static"
-        sx={{ minHeight: "64px", justifyContent: "center", flex: 1, display: "flex", flexDirection: "row" }}
+        sx={{
+          minHeight: "64px",
+          justifyContent: "center",
+          flex: 1,
+          display: "flex",
+          flexDirection: "row",
+        }}
       >
-        <Toolbar
-          sx={{ maxWidth: "1920px", flex: 1 }}>
+        <Toolbar sx={{ maxWidth: "1920px", flex: 1 }}>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             {pageName}
           </Typography>
@@ -37,7 +52,7 @@ export default function NavBar({ pageName }: Props) {
           </Button>
           <Button
             color="inherit"
-            onClick={() => navigate("/users/:userId")}
+            onClick={() => navigate(`/users/${user?.id}`)}
             disabled={visible}
           >
             {pageName === "Someone's Blog" ? "" : "Profile"}
