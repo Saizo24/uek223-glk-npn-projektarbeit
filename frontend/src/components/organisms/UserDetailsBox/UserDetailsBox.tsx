@@ -25,9 +25,9 @@ const UserDetailsBox = (user: Props) => {
       }}
     >
       <Typography>
-        {userDetails.user?.email} {userDetails.user?.firstName}{" "}
-        {userDetails.user?.lastName}
+        Name = {userDetails.user?.firstName} {userDetails.user?.lastName}
       </Typography>
+      <Typography>Email = {userDetails.user?.email}</Typography>
       <Button onClick={() => {}} variant="outlined">
         Add new Post
       </Button>

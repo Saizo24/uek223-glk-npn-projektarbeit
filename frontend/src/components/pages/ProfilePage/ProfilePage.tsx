@@ -1,3 +1,4 @@
+import { userInfo } from "os";
 import React, { useContext, useEffect, useState } from "react";
 import ActiveUserContext from "../../../Contexts/ActiveUserContext";
 import { ImagePostService } from "../../../Services/ImagePostService";
@@ -5,6 +6,7 @@ import { ImagePost } from "../../../types/models/ImagePost.model";
 import BottomBar from "../../organisms/BottomBar/BottomBar";
 import ImagePostBlog from "../../organisms/ImagePostBlog/ImagePostBlog";
 import NavBar from "../../organisms/NavBar/NavBar";
+import UserDetailsBox from "../../organisms/UserDetailsBox/UserDetailsBox";
 
 export default function ProfilePage() {
   const [imagePosts, setImagePosts] = useState<ImagePost[]>([]);
@@ -30,6 +32,7 @@ export default function ProfilePage() {
   return (
     <div>
       <NavBar pageName="Profile" />
+      <UserDetailsBox user={activeUser} />
       <ImagePostBlog
         imagePostList={imagePosts}
         postsEditable={false}
