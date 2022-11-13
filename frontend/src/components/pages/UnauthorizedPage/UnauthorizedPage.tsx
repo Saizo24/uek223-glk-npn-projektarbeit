@@ -14,6 +14,13 @@ export default function NoAuthoritiesPage() {
       >
         Return to previous Page
       </Button>
+      <Button
+        onClick={() => {
+          navigate("/login");
+        }}
+      >
+        Go to Login Page
+      </Button>
     </div>
   );
 }

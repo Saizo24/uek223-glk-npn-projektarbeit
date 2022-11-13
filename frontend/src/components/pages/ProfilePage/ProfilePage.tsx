@@ -13,6 +13,7 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import CreatePostPopUp from "../../molecules/CreatePostPopUp/CreateEditPostPopUp";
 import { Nullable } from "../../../types/Nullable";
 import { User } from "../../../types/models/User.model";
+import EditUserPopUp from "../../molecules/EditUserPopUp/EditUserPopUp";
 
 export default function ProfilePage() {
   const { userid } = useParams()
@@ -61,6 +62,10 @@ export default function ProfilePage() {
       </IconButton>
       <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
         <UserDetailsBox user={user} />
+        {user ?
+          (<EditUserPopUp user={user} />)
+          : <></>
+        }
         <CreatePostPopUp activeUser={activeUser} sx={{ display: activeUser && user && activeUser.id === user.id ? undefined : "none" }} />
       </Box>
       <ImagePostBlog

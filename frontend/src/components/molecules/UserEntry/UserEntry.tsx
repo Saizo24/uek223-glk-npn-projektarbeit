@@ -3,6 +3,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { User } from '../../../types/models/User.model'
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditUserPopUp from '../EditUserPopUp/EditUserPopUp';
 
 
 type Props = {
@@ -27,6 +28,7 @@ const UserEntry = ({ user, deleteUser }: Props) => {
                 <IconButton onClick={() => { deleteUser(user) }}>
                     <DeleteIcon />
                 </IconButton>
+                <EditUserPopUp user={user} />
             </CardActions>
         </Card>
     )

@@ -41,4 +41,14 @@ public class UserServiceImpl extends ExtendedServiceImpl<User> implements UserSe
     user.setPassword(passwordEncoder.encode(user.getPassword()));
     return save(user);
   }
+
+  @Override
+  public User updateById(UUID id, User user) throws NoSuchElementException {
+    User updatedUser = repository.findById(id).orElseThrow();
+    updatedUser.setEmail(user.getEmail());
+    updatedUser.setFirstName(user.getFirstName());
+    updatedUser.setLastName(user.getLastName());
+    updatedUser = repository.save(updatedUser);
+    return updatedUser;
+  }
 }
