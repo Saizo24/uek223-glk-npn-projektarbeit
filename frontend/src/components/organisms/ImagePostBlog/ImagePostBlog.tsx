@@ -4,6 +4,7 @@ import Box from "@mui/material/Box";
 import ImagePostEntry from "../../molecules/imagePost/ImagePostEntry";
 import SearchBar from "../../molecules/SearchBar/SearchBar";
 import { Button } from "@mui/material";
+import { ImagePostService } from "../../../Services/ImagePostService";
 
 type Props = {
   imagePostList: ImagePost[];
@@ -28,6 +29,13 @@ const ImagePostBlog = ({
   useEffect(() => {
     setImagePosts(imagePostList);
   }, [imagePostList]);
+
+  const deletePost = (imagePost: ImagePost) => {
+    const newImagePosts = Array.from(imagePosts)
+    newImagePosts.splice(newImagePosts.indexOf(imagePost), 1)
+    setImagePosts(newImagePosts)
+    ImagePostService().deletePostById(imagePost.id)
+  }
 
   return (
     <Box
@@ -64,7 +72,7 @@ const ImagePostBlog = ({
             .includes(searchValue.toLocaleLowerCase());
         })
         .map((post) => {
-          return <ImagePostEntry imagePost={post} editable={postsEditable} />;
+          return <ImagePostEntry imagePost={post} editable={postsEditable} deletePost={deletePost} />;
         })}
       <Button
         variant="contained"

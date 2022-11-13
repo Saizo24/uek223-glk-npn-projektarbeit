@@ -67,6 +67,7 @@ public class ImagePostServiceImpl extends ExtendedServiceImpl<ImagePost> impleme
       ImagePost updatedImagePost = findById(id);
       updatedImagePost.setImageURL(imagePost.getImageURL());
       updatedImagePost.setDescription(imagePost.getDescription());
-      return repository.save(updatedImagePost);
+      updatedImagePost = repository.save(updatedImagePost);
+      return updatedImagePost;
     }
 }

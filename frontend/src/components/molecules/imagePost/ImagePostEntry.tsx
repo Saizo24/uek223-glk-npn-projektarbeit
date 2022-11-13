@@ -4,6 +4,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { ImagePost } from "../../../types/models/ImagePost.model";
 import ThumbUp from "@mui/icons-material/ThumbUp"
 import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
+import DeleteIcon from '@mui/icons-material/Delete';
 import ActiveUserContext from "../../../Contexts/ActiveUserContext";
 import { ImagePostService } from "../../../Services/ImagePostService";
 import EditPostPopUp from "../EditPostPopUp/EditPostPopUp";
@@ -11,11 +12,12 @@ import EditPostPopUp from "../EditPostPopUp/EditPostPopUp";
 type Props = {
     imagePost: ImagePost;
     editable: boolean;
+    deletePost: (imagePost: ImagePost) => void
 };
 
 const MAX_LIKES_SHOWN = 3
 
-const ImagePostEntry = ({ imagePost, editable }: Props) => {
+const ImagePostEntry = ({ imagePost, editable, deletePost }: Props) => {
 
     const activeUserContext = useContext(ActiveUserContext);
     const activeUser = activeUserContext.user;
@@ -108,11 +110,15 @@ const ImagePostEntry = ({ imagePost, editable }: Props) => {
                 <IconButton onClick={() => { likePost() }}>
                     {isLiked ? <ThumbUp /> : <ThumbUpOutlinedIcon />}
                 </IconButton>
-                <EditPostPopUp
-                    activeUser={activeUser}
-                    imagePost={imagePost}
-                    sx={{ display: editable ? undefined : "none" }}
-                />
+                <Box sx={{ display: editable ? undefined : "none" }}>
+                    <EditPostPopUp
+                        activeUser={activeUser}
+                        imagePost={imagePost}
+                    />
+                    <IconButton onClick={() => { deletePost(imagePost) }}>
+                        <DeleteIcon />
+                    </IconButton>
+                </Box>
             </CardContent>
         </Card>
     );

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Log4j2
@@ -60,8 +59,8 @@ public class ImagePostController {
 
     @Transactional
     @PutMapping("/edit/{id}")
-    @PreAuthorize("hasAuthority('USER_MODIFY') || @userPermissionEvaluator.hasSameId(authentication.principal.user, #id)")
-    public ResponseEntity<ImagePostDTO> updatePostById(@Valid @RequestBody ImagePostDTO imagePostDTO) {
+    @PreAuthorize("@userPermissionEvaluator.hasSameId(authentication.principal.user, #id) || hasAuthority('USER_MODIFY')")
+    public ResponseEntity<ImagePostDTO> updatePostById(@PathVariable UUID id, @Valid @RequestBody ImagePostDTO imagePostDTO) {
         ImagePost imagePost = imagePostService.updateById(imagePostDTO.getId(), imagePostMapper.fromDTO(imagePostDTO));
         return new ResponseEntity<>(imagePostMapper.toDTO(imagePost), HttpStatus.OK);
     }
@@ -82,5 +81,13 @@ public class ImagePostController {
         log.info("post unliked by {}", username);
         ImagePost imagePost = imagePostService.unlikePostByUsername(imagePostMapper.fromDTO(imagePostDTO), username);
         return new ResponseEntity<>(imagePostMapper.toDTO(imagePost), HttpStatus.OK);
+    }
+
+    @Transactional
+    @DeleteMapping("/{id}")
+    @PreAuthorize("@userPermissionEvaluator.hasSameId(authentication.principal.user, #id) || hasAuthority('USER_MODIFY')")
+    public ResponseEntity<Void> deletePostById(@PathVariable UUID id) {
+        imagePostService.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

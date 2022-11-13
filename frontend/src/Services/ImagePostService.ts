@@ -44,6 +44,13 @@ export const ImagePostService = () => ({
             throw error
         })
         return data.data;
+    },
+
+    deletePostById: async (id: string) => {
+        const data = await api.delete(`${ENDPOINT_PREFIX}/${id}`).catch((error) => {
+            throw error
+        })
+        return data.data
     }
 });
 

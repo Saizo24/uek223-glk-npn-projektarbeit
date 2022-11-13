@@ -73,6 +73,7 @@ const CreateEditPostPopUp = ({ imagePost, activeUser, sx }: Props) => {
                             imageURL: values.imageURL,
                             description: values.description,
                         }
+                        console.log(newImagePost)
                         ImagePostService().updatePostById(newImagePost, activeUser ? activeUser.id : "");
                         formikHelpers.setSubmitting(false);
                         handleClosePopUp()
