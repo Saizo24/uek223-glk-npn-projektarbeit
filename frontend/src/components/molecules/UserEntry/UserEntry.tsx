@@ -1,10 +1,13 @@
-import { Card, CardActionArea, CardContent, Chip, Typography } from '@mui/material'
+import { Card, CardActions, CardActionArea, CardContent, Chip, Typography, IconButton } from '@mui/material'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { User } from '../../../types/models/User.model'
+import DeleteIcon from '@mui/icons-material/Delete';
+
 
 type Props = {
     user: User
+    deleteUser: (user: User) => void
 }
 
 const UserEntry = ({ user }: Props) => {
@@ -20,6 +23,11 @@ const UserEntry = ({ user }: Props) => {
                     {user.roles.map((role) => { return (<Chip label={role.name} color={role.name === "ADMIN" ? "primary" : undefined} variant={role.name === "ADMIN" ? "filled" : "outlined"}></Chip>) })}
                 </CardContent>
             </CardActionArea>
+            <CardActions>
+                <IconButton onClick={() => { }}>
+                    <DeleteIcon />
+                </IconButton>
+            </CardActions>
         </Card>
     )
 }

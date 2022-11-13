@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ImagePost } from "../../../types/models/ImagePost.model";
 import Box from "@mui/material/Box";
 import ImagePostEntry from "../../molecules/imagePost/ImagePostEntry";
 import SearchBar from "../../molecules/SearchBar/SearchBar";
 import { Button } from "@mui/material";
 import { ImagePostService } from "../../../Services/ImagePostService";
+import ActiveUserContext from "../../../Contexts/ActiveUserContext";
 
 type Props = {
   imagePostList: ImagePost[];
@@ -23,6 +24,10 @@ const ImagePostBlog = ({
   canLoadMorePosts,
   isProfile,
 }: Props) => {
+
+  const activeUserContext = useContext(ActiveUserContext);
+  const activeUser = activeUserContext.user;
+
   const [imagePosts, setImagePosts] = useState(imagePostList);
   const [searchValue, setSearchValue] = useState("");
 
@@ -34,7 +39,7 @@ const ImagePostBlog = ({
     const newImagePosts = Array.from(imagePosts)
     newImagePosts.splice(newImagePosts.indexOf(imagePost), 1)
     setImagePosts(newImagePosts)
-    ImagePostService().deletePostById(imagePost.id)
+    ImagePostService().deletePostById(activeUser ? activeUser.id : "", imagePost)
   }
 
   return (

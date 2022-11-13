@@ -17,6 +17,10 @@ const UserList = ({ users }: Props) => {
         setUserList(users)
     }, [users])
 
+    const deleteUser = (user: User) => {
+
+    }
+
     return (
         <Box sx={{
             display: "flex",
@@ -38,7 +42,7 @@ const UserList = ({ users }: Props) => {
                 }}
             />
             {userList.map((user, index) => {
-                return <UserEntry key={index} user={user} />
+                return <UserEntry key={index} user={user} deleteUser={deleteUser} />
             })}
         </Box>
     )

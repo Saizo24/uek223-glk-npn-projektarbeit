@@ -27,47 +27,56 @@ public class ImagePostServiceImpl extends ExtendedServiceImpl<ImagePost> impleme
             super(repository, logger);
             this.userService = userService;
             this.userMapper = userMapper;
-        }
+      }
 
     @Override
     public ImagePost createNewPost(ImagePost imagePost, String username) {
-      log.trace("Fetching author from database");
+        log.trace("Creating new post with author {}", username);
         User user = userService.findByUsername(username);
         imagePost.setAuthor(user);
-        return repository.save(imagePost);
+        imagePost = repository.save(imagePost);
+        log.trace("New image post saved.");
+        return imagePost;
     }
 
 
     @Override
     public List<ImagePost> retrieveAllImagesByUser(String username, Pageable pageable) {
-      User user = userService.findByUsername(username);
-      List<ImagePost> imagePosts = ((ImagePostRepository) repository).findByAuthor(user, pageable);
-      return imagePosts;
+        log.trace("Fetching all image posts from user entity with username {}", username);
+        User user = userService.findByUsername(username);
+        List<ImagePost> imagePosts = ((ImagePostRepository) repository).findByAuthor(user, pageable);
+        return imagePosts;
     }
 
     @Override
     public ImagePost likePostByUsername(ImagePost imagePost, String username) {
+      log.trace("Adding user with username {} to like list of image post", username);
       User user = userService.findByUsername(username);
       imagePost.getLikes().add(user);
       imagePost = repository.save(imagePost);
+      log.trace("Updated post saved");
       return imagePost;
     }
 
     @Override
     public ImagePost unlikePostByUsername(ImagePost imagePost, String username) {
+      log.trace("Removing user with username {} from like list of image post", username);
       ImagePost newImagePost = repository.findById(imagePost.getId()).get();
       User user = userService.findByUsername(username);
       newImagePost.getLikes().remove(user);
       newImagePost = repository.save(newImagePost);
+      log.trace("Updated post saved");
       return newImagePost;
     }
 
     @Override
     public ImagePost updateById(UUID id, ImagePost imagePost) throws NoSuchElementException {
+      log.trace("Updating imageURL and description of image post");
       ImagePost updatedImagePost = findById(id);
       updatedImagePost.setImageURL(imagePost.getImageURL());
       updatedImagePost.setDescription(imagePost.getDescription());
       updatedImagePost = repository.save(updatedImagePost);
+      log.trace("Updated post saved");
       return updatedImagePost;
     }
 }

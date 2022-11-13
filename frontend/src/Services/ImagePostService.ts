@@ -46,8 +46,8 @@ export const ImagePostService = () => ({
         return data.data;
     },
 
-    deletePostById: async (id: string) => {
-        const data = await api.delete(`${ENDPOINT_PREFIX}/${id}`).catch((error) => {
+    deletePostById: async (userId: string, imagePost: ImagePost) => {
+        const data = await api.delete(`${ENDPOINT_PREFIX}/${userId}/${imagePost.id}`).catch((error) => {
             throw error
         })
         return data.data

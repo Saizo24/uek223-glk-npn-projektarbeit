@@ -77,7 +77,7 @@ const CreateEditPostPopUp = ({ imagePost, activeUser, sx }: Props) => {
                         ImagePostService().updatePostById(newImagePost, activeUser ? activeUser.id : "");
                         formikHelpers.setSubmitting(false);
                         handleClosePopUp()
-                        navigate(0)
+                        //navigate(0)
                     }}
                     validateOnChange
                 >
