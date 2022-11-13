@@ -29,9 +29,15 @@ public class ImagePostServiceImpl extends ExtendedServiceImpl<ImagePost> impleme
             this.userMapper = userMapper;
       }
 
+    /**
+     * This method creates a new Image post and saves it into the repository. The author will be set
+     * with the given username/email.
+     * @param imagePost contains the imageUrl and description of the imagePost, the other fields are not relevant or will be set
+     * @param username contains the username/email of the author
+     * @return the completed image post with author
+     */
     @Override
     public ImagePost createNewPost(ImagePost imagePost, String username) {
-        log.trace("Creating new post with author {}", username);
         User user = userService.findByUsername(username);
         imagePost.setAuthor(user);
         imagePost = repository.save(imagePost);
@@ -39,10 +45,15 @@ public class ImagePostServiceImpl extends ExtendedServiceImpl<ImagePost> impleme
         return imagePost;
     }
 
-
+    /**
+     * Retrieves all images from user given through username/email of given page.
+     * @param username contains username/email of the user, of which the image posts we want to retrieve
+     * @param pageable contains the page, page limit and sorting of the retrieved posts
+     * @return list containing all post of wanted user of wanted page. If no image posts exists for said page,
+     * it will return an empty list.
+     */
     @Override
     public List<ImagePost> retrieveAllImagesByUser(String username, Pageable pageable) {
-        log.trace("Fetching all image posts from user entity with username {}", username);
         User user = userService.findByUsername(username);
         List<ImagePost> imagePosts = ((ImagePostRepository) repository).findByAuthor(user, pageable);
         return imagePosts;
@@ -50,7 +61,6 @@ public class ImagePostServiceImpl extends ExtendedServiceImpl<ImagePost> impleme
 
     @Override
     public ImagePost likePostByUsername(ImagePost imagePost, String username) {
-      log.trace("Adding user with username {} to like list of image post", username);
       User user = userService.findByUsername(username);
       imagePost.getLikes().add(user);
       imagePost = repository.save(imagePost);
@@ -59,9 +69,9 @@ public class ImagePostServiceImpl extends ExtendedServiceImpl<ImagePost> impleme
     }
 
     @Override
-    public ImagePost unlikePostByUsername(ImagePost imagePost, String username) {
+    public ImagePost unlikePostByUsername(ImagePost imagePost, String username) throws NoSuchElementException{
       log.trace("Removing user with username {} from like list of image post", username);
-      ImagePost newImagePost = repository.findById(imagePost.getId()).get();
+      ImagePost newImagePost = repository.findById(imagePost.getId()).orElseThrow(() -> new NoSuchElementException("No image post with given id found"));
       User user = userService.findByUsername(username);
       newImagePost.getLikes().remove(user);
       newImagePost = repository.save(newImagePost);
@@ -69,10 +79,17 @@ public class ImagePostServiceImpl extends ExtendedServiceImpl<ImagePost> impleme
       return newImagePost;
     }
 
+    /**
+     * Updates an image post with given id. Only imageUrl and description are editable.
+     * @param id contains the id of the to be updated image post
+     * @param imagePost contains new imageUrl and description
+     * @return returns updated image post
+     * @throws NoSuchElementException when no image post with given id is found
+     */
     @Override
     public ImagePost updateById(UUID id, ImagePost imagePost) throws NoSuchElementException {
       log.trace("Updating imageURL and description of image post");
-      ImagePost updatedImagePost = findById(id);
+      ImagePost updatedImagePost = repository.findById(imagePost.getId()).orElseThrow(() -> new NoSuchElementException("No image post with given id found"));
       updatedImagePost.setImageURL(imagePost.getImageURL());
       updatedImagePost.setDescription(imagePost.getDescription());
       updatedImagePost = repository.save(updatedImagePost);
