@@ -6,6 +6,7 @@ import ThumbUp from "@mui/icons-material/ThumbUp"
 import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
 import ActiveUserContext from "../../../Contexts/ActiveUserContext";
 import { ImagePostService } from "../../../Services/ImagePostService";
+import EditPostPopUp from "../EditPostPopUp/EditPostPopUp";
 
 type Props = {
     imagePost: ImagePost;
@@ -107,9 +108,11 @@ const ImagePostEntry = ({ imagePost, editable }: Props) => {
                 <IconButton onClick={() => { likePost() }}>
                     {isLiked ? <ThumbUp /> : <ThumbUpOutlinedIcon />}
                 </IconButton>
-                <Button variant="contained" sx={{ display: editable ? undefined : "none" }}>
-                    Edit
-                </Button>
+                <EditPostPopUp
+                    activeUser={activeUser}
+                    imagePost={imagePost}
+                    sx={{ display: editable ? undefined : "none" }}
+                />
             </CardContent>
         </Card>
     );

@@ -12,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.UUID;
 
 @Service
 @Log4j2
@@ -58,5 +60,13 @@ public class ImagePostServiceImpl extends ExtendedServiceImpl<ImagePost> impleme
       newImagePost.getLikes().remove(user);
       newImagePost = repository.save(newImagePost);
       return newImagePost;
+    }
+
+    @Override
+    public ImagePost updateById(UUID id, ImagePost imagePost) throws NoSuchElementException {
+      ImagePost updatedImagePost = findById(id);
+      updatedImagePost.setImageURL(imagePost.getImageURL());
+      updatedImagePost.setDescription(imagePost.getDescription());
+      return repository.save(updatedImagePost);
     }
 }

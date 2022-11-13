@@ -32,9 +32,16 @@ export const ImagePostService = () => ({
         return data.data;
     },
 
-    createNewPost: async (imagePost: ImagePost) => {
-        const data = await api.post(`${ENDPOINT_PREFIX}/`, imagePost).catch((error) => {
+    createNewPost: async (imagePost: ImagePost, username: string) => {
+        const data = await api.post(`${ENDPOINT_PREFIX}/${username}`, imagePost).catch((error) => {
             throw error;
+        })
+        return data.data;
+    },
+
+    updatePostById: async (imagePost: ImagePost, id: string) => {
+        const data = await api.put(`${ENDPOINT_PREFIX}/edit/${id}`, imagePost).catch((error) => {
+            throw error
         })
         return data.data;
     }

@@ -23,14 +23,13 @@ const validationSchema = yup.object().shape({
 });
 
 type Props = {
-    imagePost: ImagePost
     activeUser: Nullable<User>
     sx?: SxProps
 }
 
 
 
-const CreateEditPostPopUp = ({ imagePost, activeUser, sx }: Props) => {
+const CreateEditPostPopUp = ({ activeUser, sx }: Props) => {
 
     const [openPopUp, setOpenPopUp] = useState<boolean>(false)
 
@@ -50,17 +49,17 @@ const CreateEditPostPopUp = ({ imagePost, activeUser, sx }: Props) => {
                 onClick={handleOpenPopUp}
                 variant="outlined"
                 sx={{}}>
-                Edit
+                Create new Post
             </Button>
             <Dialog
                 open={openPopUp}
                 onClose={handleClosePopUp}
             >
-                <DialogTitle>Edit Post</DialogTitle>
+                <DialogTitle>Create new Post</DialogTitle>
                 <Formik
                     initialValues={{
-                        imageURL: imagePost.imageURL,
-                        description: imagePost.description
+                        imageURL: "",
+                        description: ""
                     }}
                     validationSchema={validationSchema}
                     onSubmit={(
@@ -69,11 +68,15 @@ const CreateEditPostPopUp = ({ imagePost, activeUser, sx }: Props) => {
                     ) => {
                         const newImagePost: ImagePost =
                         {
-                            ...imagePost,
+                            id: "",
                             imageURL: values.imageURL,
                             description: values.description,
+                            author: { email: "", lastName: "", firstName: "" },
+                            publicationTime: new Date(),
+                            likes: []
+
                         }
-                        ImagePostService().updatePostById(newImagePost, activeUser ? activeUser.id : "");
+                        ImagePostService().createNewPost(newImagePost, activeUser ? activeUser.email : "");
                         formikHelpers.setSubmitting(false);
                         handleClosePopUp()
                         navigate(0)

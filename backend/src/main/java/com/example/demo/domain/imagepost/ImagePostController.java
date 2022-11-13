@@ -51,18 +51,18 @@ public class ImagePostController {
     }
 
     @Transactional
-    @PostMapping("/")
+    @PostMapping("/{username}")
     @PreAuthorize("hasAuthority('READ')")
-    public ResponseEntity<ImagePostDTO> createNewPost(@Valid @RequestBody ImagePostDTO imagePostDTO, @Valid @RequestBody String username) {
+    public ResponseEntity<ImagePostDTO> createNewPost(@Valid @RequestBody ImagePostDTO imagePostDTO, @PathVariable String username) {
         ImagePost imagePost = imagePostService.createNewPost(imagePostMapper.fromDTO(imagePostDTO), username);
         return new ResponseEntity<>(imagePostMapper.toDTO(imagePost), HttpStatus.CREATED);
     }
 
     @Transactional
-    @PutMapping("/edit")
-    @PreAuthorize("hasAuthority('USER_MODIFY') || @userPermissionEvaluator.hasSameId(authentication.principal.user, id)")
-    public ResponseEntity<ImagePostDTO> updatePostById(@PathVariable UUID id, @Valid @RequestBody ImagePostDTO imagePostDTO) {
-        ImagePost imagePost = imagePostService.updateById(id, imagePostMapper.fromDTO(imagePostDTO));
+    @PutMapping("/edit/{id}")
+    @PreAuthorize("hasAuthority('USER_MODIFY') || @userPermissionEvaluator.hasSameId(authentication.principal.user, #id)")
+    public ResponseEntity<ImagePostDTO> updatePostById(@Valid @RequestBody ImagePostDTO imagePostDTO) {
+        ImagePost imagePost = imagePostService.updateById(imagePostDTO.getId(), imagePostMapper.fromDTO(imagePostDTO));
         return new ResponseEntity<>(imagePostMapper.toDTO(imagePost), HttpStatus.OK);
     }
 

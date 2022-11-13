@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ImagePost } from "../../../types/models/ImagePost.model";
 import Box from "@mui/material/Box";
 import ImagePostEntry from "../../molecules/imagePost/ImagePostEntry";
