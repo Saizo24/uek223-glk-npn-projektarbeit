@@ -10,7 +10,7 @@ type Props = {
     deleteUser: (user: User) => void
 }
 
-const UserEntry = ({ user }: Props) => {
+const UserEntry = ({ user, deleteUser }: Props) => {
     const navigate = useNavigate()
     return (
         <Card>
@@ -24,7 +24,7 @@ const UserEntry = ({ user }: Props) => {
                 </CardContent>
             </CardActionArea>
             <CardActions>
-                <IconButton onClick={() => { }}>
+                <IconButton onClick={() => { deleteUser(user) }}>
                     <DeleteIcon />
                 </IconButton>
             </CardActions>

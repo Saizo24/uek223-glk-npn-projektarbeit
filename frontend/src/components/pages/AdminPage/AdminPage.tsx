@@ -17,8 +17,6 @@ export default function AdminPage() {
   const [canLoadMorePosts, setCanLoadMorePosts] = useState<boolean>(true);
   const [tab, setTab] = useState<AdminTab>(AdminTab.BLOG)
 
-  const activeUserContext = useContext(ActiveUserContext)
-
   useEffect(() => {
     ImagePostService()
       .getAllImagePosts(pageNumber)
@@ -39,6 +37,15 @@ export default function AdminPage() {
         setUserList(newUserList);
       });
   }, [pageNumber])
+
+  const deleteUser = (user: User) => {
+    const newUserList = Array.from(userList)
+    const newImagePosts = imagePosts.filter((imagePost) => imagePost.author.email !== user.email)
+    newUserList.splice(newUserList.indexOf(user), 1)
+    setUserList(newUserList)
+    UserService.deleteUser(user.id)
+    setImagePosts(newImagePosts)
+  }
 
   return (
     <div>
@@ -63,7 +70,7 @@ export default function AdminPage() {
           />
         </Box>
         <Box hidden={tab !== AdminTab.USERS}>
-          <UserList users={userList} />
+          <UserList users={userList} deleteUser={deleteUser} />
         </Box>
       </Box>
       <BottomBar />

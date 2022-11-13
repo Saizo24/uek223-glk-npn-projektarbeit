@@ -9,6 +9,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.NoSuchElementException;
+import java.util.UUID;
+
 @Service
 @Log4j2
 public class UserServiceImpl extends ExtendedServiceImpl<User> implements UserService {
