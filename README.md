@@ -1,5 +1,5 @@
 # Table of contents
-1. Prerequisites(#Prerequisites)
+1. [Prerequisites](#Prerequisites)
 2. [Setup](#Setup)
     1. [GitHub](#Github)
     2. [Database](#Database)
