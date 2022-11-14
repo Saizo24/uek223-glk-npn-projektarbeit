@@ -22,12 +22,11 @@ const validationSchema = yup.object().shape({
 });
 
 type Props = {
-    imagePost: ImagePost
     activeUser: Nullable<User>
     sx?: SxProps
 }
 
-const EditPostPopUp = ({ imagePost, activeUser, sx }: Props) => {
+const CreateEditPostPopUp = ({ activeUser, sx }: Props) => {
 
     const navigate = useNavigate()
 
@@ -46,17 +45,17 @@ const EditPostPopUp = ({ imagePost, activeUser, sx }: Props) => {
                 onClick={handleOpenPopUp}
                 variant="outlined"
                 sx={{}}>
-                Edit
+                Create new Post
             </Button>
             <Dialog
                 open={openPopUp}
                 onClose={handleClosePopUp}
             >
-                <DialogTitle>Edit Post</DialogTitle>
+                <DialogTitle>Create new Post</DialogTitle>
                 <Formik
                     initialValues={{
-                        imageURL: imagePost.imageURL,
-                        description: imagePost.description
+                        imageURL: "",
+                        description: ""
                     }}
                     validationSchema={validationSchema}
                     onSubmit={(
@@ -65,14 +64,17 @@ const EditPostPopUp = ({ imagePost, activeUser, sx }: Props) => {
                     ) => {
                         const newImagePost: ImagePost =
                         {
-                            ...imagePost,
+                            id: "",
                             imageURL: values.imageURL,
                             description: values.description,
+                            author: { email: "", lastName: "", firstName: "" },
+                            publicationTime: new Date(),
+                            likes: []
                         }
                         ImagePostService()
-                            .updatePostById(newImagePost, activeUser ? activeUser.id : "")
+                            .createNewPost(newImagePost, activeUser ? activeUser.email : "")
                             .catch((error) => {
-                                alert(`Error: couldn't update image posts: ${error.message}`)
+                                alert(`Error: couldn't create image posts: ${error.message}`)
                             })
                         formikHelpers.setSubmitting(false);
                         handleClosePopUp()
@@ -132,4 +134,4 @@ const EditPostPopUp = ({ imagePost, activeUser, sx }: Props) => {
     )
 }
 
-export default EditPostPopUp
+export default CreateEditPostPopUp

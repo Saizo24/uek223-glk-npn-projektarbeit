@@ -8,11 +8,15 @@ type Props = {
   children?: HTMLElement | string;
 };
 
+/**
+ * Component for Navbar. Homepage is exclusive for authenticated user, admin page for admins. Profile page can be accessed by admin and
+ * regular users, but only admins can navigate to other users profile page through the admin page.
+ */
 export default function NavBar({ pageName }: Props) {
   const navigate = useNavigate();
   const { logout } = useContext(ActiveUserContext);
   const { user } = useContext(ActiveUserContext);
-  const visible: boolean = pageName === "Someone's Blog" ? true : false;
+  const visible: boolean = pageName === "Someone's Blog" ? false : true;
 
   const handleSubmit = () => {
     logout();
@@ -47,19 +51,23 @@ export default function NavBar({ pageName }: Props) {
           <Button
             color="inherit"
             onClick={() => navigate("/homepage")}
-            disabled={visible}
+            sx={{ display: visible ? undefined : "none" }}
           >
             {user && user.roles.some((role) => role.name === "ADMIN") ? "Admin Page" : "Homepage"}
           </Button>
           <Button
             color="inherit"
             onClick={() => navigate(`/users/${user?.id}`)}
-            disabled={visible}
+            sx={{ display: visible ? undefined : "none" }}
           >
-            {pageName === "Someone's Blog" ? "" : "Profile"}
+            Profile
           </Button>
-          <Button color="inherit" onClick={handleSubmit} disabled={visible}>
-            {pageName === "Someone's Blog" ? "" : "Logout"}
+          <Button
+            color="inherit"
+            onClick={handleSubmit}
+            sx={{ display: visible ? undefined : "none" }}
+          >
+            Logout
           </Button>
         </Toolbar>
       </AppBar>

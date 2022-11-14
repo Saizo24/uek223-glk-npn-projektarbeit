@@ -6,9 +6,13 @@ import UserEntry from '../../molecules/UserEntry/UserEntry'
 
 type Props = {
     users: User[]
+    deleteUser: (user: User) => void
 }
 
-const UserList = ({ users }: Props) => {
+/**
+ * Displays all user for the admin
+ */
+const UserList = ({ users, deleteUser }: Props) => {
 
     const [userList, setUserList] = useState(users)
     const [searchValue, setSearchValue] = useState("")
@@ -38,7 +42,7 @@ const UserList = ({ users }: Props) => {
                 }}
             />
             {userList.map((user, index) => {
-                return <UserEntry key={index} user={user} />
+                return <UserEntry key={index} user={user} deleteUser={deleteUser} />
             })}
         </Box>
     )

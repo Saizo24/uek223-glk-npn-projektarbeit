@@ -4,6 +4,8 @@ import com.example.demo.core.generic.ExtendedEntity;
 import com.example.demo.domain.imagepost.ImagePost;
 import com.example.demo.domain.role.Role;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -26,9 +28,15 @@ public class User extends ExtendedEntity {
   @Column(name = "password")
   private String password;
 
-  @OneToMany(mappedBy = "author")
+  @OneToMany(mappedBy = "author", cascade = CascadeType.REMOVE)
   @JsonBackReference
   private Set<ImagePost> imagePosts = new HashSet<>();
+
+  @ManyToMany(fetch = FetchType.EAGER)
+  @JoinTable(name = "image_post_user", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+    inverseJoinColumns = @JoinColumn(name = "image_post_id", referencedColumnName = "id"))
+  @OnDelete(action = OnDeleteAction.CASCADE)
+  private Set<ImagePost> likes = new HashSet<>();
 
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(name = "users_role", joinColumns = @JoinColumn(name = "users_id", referencedColumnName = "id"),

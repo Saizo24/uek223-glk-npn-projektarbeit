@@ -1,6 +1,9 @@
 import { Link, Typography } from "@mui/material";
 import React from "react";
 
+/**
+ * Introduction Page content, when visitors aren't logged in
+ */
 const LandingPageBox = () => {
   return (
     <div>

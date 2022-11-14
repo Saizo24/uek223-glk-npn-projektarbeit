@@ -1,0 +1,1218 @@
+{
+	"info": {
+		"_postman_id": "4f9a0315-8d28-446d-9ce3-7104be9ab4ee",
+		"name": "uek 223",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21253228"
+	},
+	"item": [
+		{
+			"name": "Admin Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseJSON = pm.response.headers.get(\"Authorization\");\r",
+							"pm.environment.set(\"adminToken\", responseJSON.substring(\"bearer \".length));\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is of type user\", function () {\r",
+							"    const data = pm.response.json();\r",
+							"    pm.expect(data).to.have.property(\"id\");\r",
+							"        pm.environment.set(\"adminId\", data.id);\r",
+							"    pm.expect(data).to.have.property(\"firstName\");\r",
+							"        pm.environment.set(\"adminFirstName\", data.firstName);\r",
+							"    pm.expect(data).to.have.property(\"lastName\");\r",
+							"        pm.environment.set(\"adminLastName\", data.lastName);\r",
+							"    pm.expect(data).to.have.property(\"email\");\r",
+							"        pm.environment.set(\"adminEmail\", data.email);\r",
+							"    pm.expect(data).to.have.property(\"roles\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"admin@example.com\",\r\n    \"password\": \"1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Host}}/user/login",
+					"host": [
+						"{{Host}}"
+					],
+					"path": [
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseJSON = pm.response.headers.get(\"Authorization\");\r",
+							"pm.environment.set(\"userToken\", responseJSON.substring(\"bearer \".length));\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is of type user\", function () {\r",
+							"    const data = pm.response.json();\r",
+							"    pm.expect(data).to.have.property(\"id\");\r",
+							"        pm.environment.set(\"userId\", data.id);\r",
+							"    pm.expect(data).to.have.property(\"firstName\");\r",
+							"        pm.environment.set(\"userFirstName\", data.firstName);\r",
+							"    pm.expect(data).to.have.property(\"lastName\");\r",
+							"        pm.environment.set(\"userLastName\", data.lastName);\r",
+							"    pm.expect(data).to.have.property(\"email\");\r",
+							"        pm.environment.set(\"userEmail\", data.email);\r",
+							"    pm.expect(data).to.have.property(\"roles\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"user@example.com\",\r\n    \"password\": \"1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Host}}/user/login",
+					"host": [
+						"{{Host}}"
+					],
+					"path": [
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create new Imagepost as User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is of type imagepost\", function () {\r",
+							"    const data = pm.response.json();\r",
+							"    pm.expect(data).to.have.property(\"id\");\r",
+							"    pm.expect(data).to.have.property(\"imageURL\");\r",
+							"    pm.expect(data).to.have.property(\"description\");\r",
+							"    pm.expect(data).to.have.property(\"publicationTime\");\r",
+							"    pm.expect(data).to.have.property(\"likes\");\r",
+							"    pm.expect(data).to.have.property(\"author\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{userToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"imageURL\": \"https://images3.memedroid.com/images/UPLOADED60/5a3dab221c19a.jpeg\",\r\n    \"description\": \"KEKW\",\r\n    \"publicationTime\": \"2022-11-14T00:00:00\",\r\n    \"likes\": []\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Host}}/imagepost/{{userEmail}}",
+					"host": [
+						"{{Host}}"
+					],
+					"path": [
+						"imagepost",
+						"{{userEmail}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all Imageposts on first page from user as user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"User has 4 imageposts, all should be shown on first page\", function () {\r",
+							"    const data = pm.response.json();\r",
+							"    pm.expect(data.length).to.be.equals(4);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{userToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Host}}/imagepost/{{userEmail}}/0",
+					"host": [
+						"{{Host}}"
+					],
+					"path": [
+						"imagepost",
+						"{{userEmail}}",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all Imageposts on first page as user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"There are more than 5 whole imageposts in the db, therefore the max. amount (5) are shown\", function () {\r",
+							"    const data = pm.response.json();\r",
+							"    pm.expect(data.length).to.be.equals(5);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{userToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Host}}/imagepost/0/",
+					"host": [
+						"{{Host}}"
+					],
+					"path": [
+						"imagepost",
+						"0",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Like an Imagepost as user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"There are no likes on the imagepost before, there should be one afterwards\", function () {\r",
+							"    const data = pm.response.json();\r",
+							"    pm.expect(data).to.have.property(\"likes\");\r",
+							"    pm.expect(data.likes.length).to.be.equals(1);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{userToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n        \"id\": \"e811cac7-7fa5-4625-a5ab-8011faa35b43\",\r\n        \"imageURL\": \"https://i.guim.co.uk/img/media/882940c47b3e740821258458f62b14b552e614c8/0_0_542_617/master/542.jpg?width=620&quality=85&dpr=1&s=none\",\r\n        \"description\": \"jet fuel cant melt steel beams\",\r\n        \"publicationTime\": \"2022-11-04T12:00:00\",\r\n        \"likes\": [],\r\n        \"author\": {\r\n            \"id\": \"0d8fa44c-54fd-4cd0-ace9-2a7da57992de\",\r\n            \"firstName\": \"Tyler\",\r\n            \"lastName\": \"Durden\",\r\n            \"email\": \"user@example.com\",\r\n            \"roles\": [\r\n                {\r\n                    \"id\": \"47883133-4042-4c2c-ac41-c1fd5631864d\",\r\n                    \"name\": \"USER\",\r\n                    \"authorities\": [\r\n                        {\r\n                            \"id\": \"2b0a0711-8807-4d20-b376-5d5b184078c3\",\r\n                            \"name\": \"READ\"\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        }\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Host}}/imagepost/like/{{userEmail}}",
+					"host": [
+						"{{Host}}"
+					],
+					"path": [
+						"imagepost",
+						"like",
+						"{{userEmail}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Unlike an Imagepost as user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"There are two likes on the imagepost before, there should be one afterwards\", function () {\r",
+							"    const data = pm.response.json();\r",
+							"    pm.expect(data).to.have.property(\"likes\");\r",
+							"    pm.expect(data.likes.length).to.be.equals(1);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{userToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"b85b9e34-5242-425e-b62d-863c4b30601f\",\r\n    \"imageURL\": \"https://i.guim.co.uk/img/media/596f80ed52713302bfba078113594ca419e520a4/0_0_1024_614/master/1024.jpg?width=620&quality=85&dpr=1&s=none\",\r\n    \"description\": \"you crazy\",\r\n    \"publicationTime\": \"2022-11-05T23:30:00\",\r\n    \"likes\": [\r\n        {\r\n            \"id\": \"ba804cb9-fa14-42a5-afaf-be488742fc54\",\r\n            \"firstName\": \"James\",\r\n            \"lastName\": \"Bond\",\r\n            \"email\": \"admin@example.com\",\r\n            \"roles\": [\r\n                {\r\n                    \"id\": \"4b650987-a0d9-4bf6-834e-b8f9e3db69f8\",\r\n                    \"name\": \"ADMIN\",\r\n                    \"authorities\": [\r\n                        {\r\n                            \"id\": \"1190fe33-5f17-46cb-a9df-dc0d949de63e\",\r\n                            \"name\": \"USER_DELETE\"\r\n                        },\r\n                        {\r\n                            \"id\": \"2b0a0711-8807-4d20-b376-5d5b184078c3\",\r\n                            \"name\": \"READ\"\r\n                        },\r\n                        {\r\n                            \"id\": \"3cef575c-49b7-4c34-858a-209b39dbc150\",\r\n                            \"name\": \"USER_CREATE\"\r\n                        },\r\n                        {\r\n                            \"id\": \"0b37d53c-a9a1-443d-8f4b-0384ab77833c\",\r\n                            \"name\": \"USER_MODIFY\"\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"id\": \"0d8fa44c-54fd-4cd0-ace9-2a7da57992de\",\r\n            \"firstName\": \"Tyler\",\r\n            \"lastName\": \"Durden\",\r\n            \"email\": \"user@example.com\",\r\n            \"roles\": [\r\n                {\r\n                    \"id\": \"47883133-4042-4c2c-ac41-c1fd5631864d\",\r\n                    \"name\": \"USER\",\r\n                    \"authorities\": [\r\n                        {\r\n                            \"id\": \"2b0a0711-8807-4d20-b376-5d5b184078c3\",\r\n                            \"name\": \"READ\"\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        }\r\n    ],\r\n    \"author\": {\r\n        \"id\": \"0d8fa44c-54fd-4cd0-ace9-2a7da57992de\",\r\n        \"firstName\": \"Tyler\",\r\n        \"lastName\": \"Durden\",\r\n        \"email\": \"user@example.com\",\r\n        \"roles\": [\r\n            {\r\n                \"id\": \"47883133-4042-4c2c-ac41-c1fd5631864d\",\r\n                \"name\": \"USER\",\r\n                \"authorities\": [\r\n                    {\r\n                        \"id\": \"2b0a0711-8807-4d20-b376-5d5b184078c3\",\r\n                        \"name\": \"READ\"\r\n                    }\r\n                ]\r\n            }\r\n        ]\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Host}}/imagepost/unlike/{{userEmail}}",
+					"host": [
+						"{{Host}}"
+					],
+					"path": [
+						"imagepost",
+						"unlike",
+						"{{userEmail}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update own Imagepost as user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Description of imagepost should be banana after change\", function () {\r",
+							"    const data = pm.response.json();\r",
+							"    pm.expect(data).to.have.property(\"description\");\r",
+							"    pm.expect(data.description).to.be.equals(\"banana\");\r",
+							"    pm.environment.set(\"imagePostId\", data.id);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{userToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"e811cac7-7fa5-4625-a5ab-8011faa35b43\",\r\n    \"imageURL\": \"https://i.guim.co.uk/img/media/882940c47b3e740821258458f62b14b552e614c8/0_0_542_617/master/542.jpg?width=620&quality=85&dpr=1&s=none\",\r\n    \"description\": \"banana\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Host}}/imagepost/edit/{{userId}}",
+					"host": [
+						"{{Host}}"
+					],
+					"path": [
+						"imagepost",
+						"edit",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update foreign Imagepost as user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 403\", function () {\r",
+							"    pm.response.to.have.status(403);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{userToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{    \r\n    \"id\": \"b85b9e34-5242-425e-b62d-863c4b30601f\",\r\n    \"imageURL\": \"https://i.guim.co.uk/img/media/596f80ed52713302bfba078113594ca419e520a4/0_0_1024_614/master/1024.jpg?width=620&quality=85&dpr=1&s=none\",\r\n    \"description\": \"banana\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Host}}/imagepost/edit/{{adminId}}",
+					"host": [
+						"{{Host}}"
+					],
+					"path": [
+						"imagepost",
+						"edit",
+						"{{adminId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update foreign Imagepost as admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Description of imagepost should be wtf after change\", function () {\r",
+							"    const data = pm.response.json();\r",
+							"    pm.expect(data).to.have.property(\"description\");\r",
+							"    pm.expect(data.description).to.be.equals(\"wtf\");\r",
+							"    pm.environment.set(\"imagePostId\", data.id);\r",
+							"    pm.environment.set(\"imagePostUrl\", data.imageURL);\r",
+							"    pm.environment.set(\"imagePostDescription\", data.description);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{adminToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"e811cac7-7fa5-4625-a5ab-8011faa35b43\",\r\n    \"imageURL\": \"https://i.guim.co.uk/img/media/882940c47b3e740821258458f62b14b552e614c8/0_0_542_617/master/542.jpg?width=620&quality=85&dpr=1&s=none\",\r\n    \"description\": \"wtf\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Host}}/imagepost/edit/{{adminId}}",
+					"host": [
+						"{{Host}}"
+					],
+					"path": [
+						"imagepost",
+						"edit",
+						"{{adminId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete own Imagepost as user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{userToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": {{imagePostId}},\r\n    \"imageURL\": {{imagePostUrl}},\r\n    \"description\": {{imagePostDescription}}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Host}}/imagepost/{{userId}}/{{imagePostId}}",
+					"host": [
+						"{{Host}}"
+					],
+					"path": [
+						"imagepost",
+						"{{userId}}",
+						"{{imagePostId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete foreign Imagepost as user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 403\", function () {\r",
+							"    pm.response.to.have.status(403);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{userToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{    \r\n    \"id\": \"b85b9e34-5242-425e-b62d-863c4b30601f\",\r\n    \"imageURL\": \"https://i.guim.co.uk/img/media/596f80ed52713302bfba078113594ca419e520a4/0_0_1024_614/master/1024.jpg?width=620&quality=85&dpr=1&s=none\",\r\n    \"description\": \"you crazy\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Host}}/imagepost/e811cac7-7fa5-4625-a5ab-8011faa35b43",
+					"host": [
+						"{{Host}}"
+					],
+					"path": [
+						"imagepost",
+						"e811cac7-7fa5-4625-a5ab-8011faa35b43"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete foreign Imagepost as admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{adminToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"d7655697-eeef-4a2a-870a-1bc4ef022ad3\",\r\n    \"imageURL\": \"https://cdn.vox-cdn.com/thumbor/KwXyAUZGjHOfbZ7Ef0AAtXnzG7M=/0x0:1409x785/1400x1050/filters:focal(734x364:735x365)/cdn0.vox-cdn.com/uploads/chorus_asset/file/8846551/Screen_Shot_2017_07_13_at_1.09.20_PM.png\",\r\n    \"description\": \"How do you do fellow kids?\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Host}}/imagepost/{{userId}}/d7655697-eeef-4a2a-870a-1bc4ef022ad3",
+					"host": [
+						"{{Host}}"
+					],
+					"path": [
+						"imagepost",
+						"{{userId}}",
+						"d7655697-eeef-4a2a-870a-1bc4ef022ad3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get own info as user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is of type user\", function () {\r",
+							"    const data = pm.response.json();\r",
+							"    pm.expect(data).to.have.property(\"id\");\r",
+							"    pm.expect(data).to.have.property(\"firstName\");\r",
+							"    pm.expect(data).to.have.property(\"lastName\");\r",
+							"    pm.expect(data).to.have.property(\"email\");\r",
+							"    pm.expect(data).to.have.property(\"roles\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{userToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Host}}/user/id/{{userId}}",
+					"host": [
+						"{{Host}}"
+					],
+					"path": [
+						"user",
+						"id",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get foreign info as user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 403\", function () {\r",
+							"    pm.response.to.have.status(403);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{userToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Host}}/user/id/{{adminId}}",
+					"host": [
+						"{{Host}}"
+					],
+					"path": [
+						"user",
+						"id",
+						"{{adminId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get foreign info as admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is of type user\", function () {\r",
+							"    const data = pm.response.json();\r",
+							"    pm.expect(data).to.have.property(\"id\");\r",
+							"    pm.expect(data).to.have.property(\"firstName\");\r",
+							"    pm.expect(data).to.have.property(\"lastName\");\r",
+							"    pm.expect(data).to.have.property(\"email\");\r",
+							"    pm.expect(data).to.have.property(\"roles\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{adminToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Host}}/user/id/{{userId}}",
+					"host": [
+						"{{Host}}"
+					],
+					"path": [
+						"user",
+						"id",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all user info as user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 403\", function () {\r",
+							"    pm.response.to.have.status(403);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{userToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Host}}/user/page/0",
+					"host": [
+						"{{Host}}"
+					],
+					"path": [
+						"user",
+						"page",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all user info as admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"There are three users in the db that should be shown\", function () {\r",
+							"    const data = pm.response.json();\r",
+							"    pm.expect(data.length).to.be.equals(3);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{adminToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Host}}/user/page/0",
+					"host": [
+						"{{Host}}"
+					],
+					"path": [
+						"user",
+						"page",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update own info as user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Firstname and Lastname should be Ethan & Hunt after change\", function () {\r",
+							"    const data = pm.response.json();\r",
+							"    pm.expect(data).to.have.property(\"firstName\");\r",
+							"    pm.expect(data.firstName).to.be.equals(\"Ethan\");\r",
+							"    pm.expect(data).to.have.property(\"lastName\");\r",
+							"    pm.expect(data.firstName).to.be.equals(\"Hunt\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{userToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"Ethan\",\r\n    \"lastName\": \"Hunt\",\r\n    \"email\": \"user@example.com\",\r\n    \"roles\": [\r\n        {\r\n            \"id\": \"47883133-4042-4c2c-ac41-c1fd5631864d\",\r\n            \"name\": \"USER\",\r\n            \"authorities\": [\r\n                {\r\n                    \"id\": \"2b0a0711-8807-4d20-b376-5d5b184078c3\",\r\n                    \"name\": \"READ\"\r\n                }\r\n            ]\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Host}}/user/{{userId}}",
+					"host": [
+						"{{Host}}"
+					],
+					"path": [
+						"user",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update foreign info as user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 403\", function () {\r",
+							"    pm.response.to.have.status(403);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{userToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"Ethan\",\r\n    \"lastName\": \"Hunt\",\r\n    \"email\": \"admin@example.com\",\r\n    \"roles\": [\r\n            {\r\n                \"id\": \"4b650987-a0d9-4bf6-834e-b8f9e3db69f8\",\r\n                \"name\": \"ADMIN\",\r\n                \"authorities\": [\r\n                    {\r\n                        \"id\": \"3cef575c-49b7-4c34-858a-209b39dbc150\",\r\n                        \"name\": \"USER_CREATE\"\r\n                    },\r\n                    {\r\n                        \"id\": \"0b37d53c-a9a1-443d-8f4b-0384ab77833c\",\r\n                        \"name\": \"USER_MODIFY\"\r\n                    },\r\n                    {\r\n                        \"id\": \"1190fe33-5f17-46cb-a9df-dc0d949de63e\",\r\n                        \"name\": \"USER_DELETE\"\r\n                    },\r\n                    {\r\n                        \"id\": \"2b0a0711-8807-4d20-b376-5d5b184078c3\",\r\n                        \"name\": \"READ\"\r\n                    }\r\n                ]\r\n            }\r\n        ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Host}}/user/{{adminId}}",
+					"host": [
+						"{{Host}}"
+					],
+					"path": [
+						"user",
+						"{{adminId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update foreign info as admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Firstname and Lastname should be Zohan & Dvir after change\", function () {\r",
+							"    const data = pm.response.json();\r",
+							"    pm.expect(data).to.have.property(\"firstName\");\r",
+							"    pm.expect(data.firstName).to.be.equals(\"Zohan\");\r",
+							"    pm.expect(data).to.have.property(\"lastName\");\r",
+							"    pm.expect(data.firstName).to.be.equals(\"Dvir\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{adminToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"Zohan\",\r\n    \"lastName\": \"Dvir\",\r\n    \"email\": \"user@example.com\",\r\n    \"roles\": [\r\n        {\r\n            \"id\": \"47883133-4042-4c2c-ac41-c1fd5631864d\",\r\n            \"name\": \"USER\",\r\n            \"authorities\": [\r\n                {\r\n                    \"id\": \"2b0a0711-8807-4d20-b376-5d5b184078c3\",\r\n                    \"name\": \"READ\"\r\n                }\r\n            ]\r\n        }\r\n    ] \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Host}}/user/{{userId}}",
+					"host": [
+						"{{Host}}"
+					],
+					"path": [
+						"user",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete user as user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 403\", function () {\r",
+							"    pm.response.to.have.status(403);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{userToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": {{userId}}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Host}}/user/{{userId}}",
+					"host": [
+						"{{Host}}"
+					],
+					"path": [
+						"user",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete user as admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{adminToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": {{userId}}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Host}}/user/{{userId}}",
+					"host": [
+						"{{Host}}"
+					],
+					"path": [
+						"user",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

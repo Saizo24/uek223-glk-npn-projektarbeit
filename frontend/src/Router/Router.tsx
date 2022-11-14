@@ -15,7 +15,6 @@ import ProfilePage from "../components/pages/ProfilePage/ProfilePage";
 
 const Router = () => {
   const { checkRole } = useContext(ActiveUserContext);
-  const { user } = useContext(ActiveUserContext);
 
   /** navigate to different "home"-locations depending on Role the user have */
 

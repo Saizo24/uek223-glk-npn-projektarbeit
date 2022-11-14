@@ -2,32 +2,34 @@ import { Box, Button, Dialog, DialogTitle, SxProps, TextField } from '@mui/mater
 import { Form, Formik, FormikHelpers, FormikProps } from 'formik'
 import * as yup from "yup";
 import React, { useState } from 'react'
-import { ImagePostService } from '../../../Services/ImagePostService'
-import { ImagePost } from '../../../types/models/ImagePost.model'
 import { User } from '../../../types/models/User.model'
-import { Nullable } from '../../../types/Nullable';
 import { useNavigate } from 'react-router-dom';
+import UserService from '../../../Services/UserService';
 
 interface FormValues {
-    imageURL: string
-    description: string
+    email: string
+    firstName: string
+    lastName: string
 }
 
 const validationSchema = yup.object().shape({
-    imageURL: yup.string().required("Please enter a link to your picture."),
-    description: yup
+    email: yup.string().required("Please enter a valid email."),
+    firstName: yup
         .string()
-        .required("Please enter a description for your post.")
-        .max(200, "Description can only be 200 characters long."),
+        .required("Please enter your new first name.")
+        .max(20, "First names can only be up to 20 characters long."),
+    lastName: yup
+        .string()
+        .required("Please enter your new last name.")
+        .max(20, "First names can only be up to 20 characters long."),
 });
 
 type Props = {
-    imagePost: ImagePost
-    activeUser: Nullable<User>
+    user: User
     sx?: SxProps
 }
 
-const EditPostPopUp = ({ imagePost, activeUser, sx }: Props) => {
+const EditUserPopUp = ({ user, sx }: Props) => {
 
     const navigate = useNavigate()
 
@@ -52,28 +54,26 @@ const EditPostPopUp = ({ imagePost, activeUser, sx }: Props) => {
                 open={openPopUp}
                 onClose={handleClosePopUp}
             >
-                <DialogTitle>Edit Post</DialogTitle>
+                <DialogTitle>Edit User</DialogTitle>
                 <Formik
                     initialValues={{
-                        imageURL: imagePost.imageURL,
-                        description: imagePost.description
+                        email: user.email,
+                        firstName: user.firstName,
+                        lastName: user.lastName
                     }}
                     validationSchema={validationSchema}
                     onSubmit={(
                         values: FormValues,
                         formikHelpers: FormikHelpers<FormValues>
                     ) => {
-                        const newImagePost: ImagePost =
+                        const newUser: User =
                         {
-                            ...imagePost,
-                            imageURL: values.imageURL,
-                            description: values.description,
+                            ...user,
+                            email: values.email,
+                            firstName: values.firstName,
+                            lastName: values.lastName
                         }
-                        ImagePostService()
-                            .updatePostById(newImagePost, activeUser ? activeUser.id : "")
-                            .catch((error) => {
-                                alert(`Error: couldn't update image posts: ${error.message}`)
-                            })
+                        UserService.updateUser(newUser);
                         formikHelpers.setSubmitting(false);
                         handleClosePopUp()
                         navigate(0)
@@ -85,25 +85,36 @@ const EditPostPopUp = ({ imagePost, activeUser, sx }: Props) => {
                             <Box sx={{ height: "100%", width: "100%" }}>
                                 <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                                     <TextField
-                                        name="imageURL"
-                                        label="ImageURL"
-                                        placeholder='Enter URL of Image'
+                                        name="email"
+                                        label="Email"
+                                        placeholder='Enter your Email'
                                         onChange={formikProps.handleChange}
-                                        value={formikProps.values.imageURL}
+                                        value={formikProps.values.email}
                                     />
-                                    {formikProps.errors.imageURL && (
-                                        <div>{formikProps.errors.imageURL}</div>
+                                    {formikProps.errors.email && (
+                                        <div>{formikProps.errors.email}</div>
                                     )}
                                     <TextField
-                                        name="description"
-                                        label="Description"
-                                        placeholder='Enter a description'
+                                        name="firstName"
+                                        label="First Name"
+                                        placeholder='Enter a first name'
                                         onChange={formikProps.handleChange}
                                         multiline
-                                        value={formikProps.values.description}
+                                        value={formikProps.values.firstName}
                                     />
-                                    {formikProps.errors.description && (
-                                        <div>{formikProps.errors.description}</div>
+                                    {formikProps.errors.firstName && (
+                                        <div>{formikProps.errors.firstName}</div>
+                                    )}
+                                    <TextField
+                                        name="lastName"
+                                        label="Last Name"
+                                        placeholder='Enter a last name'
+                                        onChange={formikProps.handleChange}
+                                        multiline
+                                        value={formikProps.values.lastName}
+                                    />
+                                    {formikProps.errors.lastName && (
+                                        <div>{formikProps.errors.lastName}</div>
                                     )}
                                 </Box>
                                 <Button
@@ -132,4 +143,4 @@ const EditPostPopUp = ({ imagePost, activeUser, sx }: Props) => {
     )
 }
 
-export default EditPostPopUp
+export default EditUserPopUp
