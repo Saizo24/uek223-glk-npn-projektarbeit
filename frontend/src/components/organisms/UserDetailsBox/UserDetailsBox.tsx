@@ -4,8 +4,13 @@ import { Typography } from "@mui/material";
 import { User } from "../../../types/models/User.model";
 import { Nullable } from "../../../types/Nullable";
 
-type Props = { user: Nullable<User> };
+type Props = {
+  user: Nullable<User>
+};
 
+/**
+ * Box displaying personal info of an user
+ */
 const UserDetailsBox = (user: Props) => {
   const [userDetails, setUserDetails] = useState(user);
 

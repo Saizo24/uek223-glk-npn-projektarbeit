@@ -12,6 +12,9 @@ type Props = {
   sx?: SxProps;
 };
 
+/*
+ * General search bar
+ */
 const SearchBar = ({ searchItem, searchValue, setSearchValue, sx }: Props) => {
   return (
     <Box
@@ -22,7 +25,12 @@ const SearchBar = ({ searchItem, searchValue, setSearchValue, sx }: Props) => {
         ...sx,
       }}
     >
-      <Paper sx={{ display: "flex", flex: 1 }}>
+      <Paper
+        sx={{
+          display: "flex",
+          flex: 1
+        }}
+      >
         <InputBase
           sx={{ ml: 1, flex: 1 }}
           placeholder={`Search for ${searchItem}`}

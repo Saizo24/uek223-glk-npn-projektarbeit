@@ -1,7 +1,5 @@
 import { Box } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import UserService from '../../../Services/UserService'
 import { User } from '../../../types/models/User.model'
 import SearchBar from '../../molecules/SearchBar/SearchBar'
 import UserEntry from '../../molecules/UserEntry/UserEntry'
@@ -11,8 +9,10 @@ type Props = {
     deleteUser: (user: User) => void
 }
 
+/**
+ * Displays all user for the admin
+ */
 const UserList = ({ users, deleteUser }: Props) => {
-    const navigate = useNavigate()
 
     const [userList, setUserList] = useState(users)
     const [searchValue, setSearchValue] = useState("")

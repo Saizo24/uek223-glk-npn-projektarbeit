@@ -1,6 +1,5 @@
 import { Box, Tab, Tabs } from "@mui/material";
-import React, { useContext, useEffect, useState } from "react";
-import ActiveUserContext from "../../../Contexts/ActiveUserContext";
+import React, { useEffect, useState } from "react";
 import { ImagePostService } from "../../../Services/ImagePostService";
 import UserService from "../../../Services/UserService";
 import { ImagePost } from "../../../types/models/ImagePost.model";
@@ -10,6 +9,16 @@ import ImagePostBlog from "../../organisms/ImagePostBlog/ImagePostBlog";
 import NavBar from "../../organisms/NavBar/NavBar";
 import UserList from "../../organisms/UserList/UserList";
 
+
+enum AdminTab {
+  BLOG, USERS
+}
+
+/**
+ * Default page for admins. Displays a tab for all posts and all users. Admins can choose an
+ * image post or user to edit or delete. The image post tab has the same functionality as
+ * the home page of authenticated user.
+ */
 export default function AdminPage() {
   const [imagePosts, setImagePosts] = useState<ImagePost[]>([]);
   const [userList, setUserList] = useState<User[]>([])
@@ -38,6 +47,7 @@ export default function AdminPage() {
       });
   }, [pageNumber])
 
+  //Handles the deletion of an user. Also filters the loaded image posts until new data is reloaded
   const deleteUser = (user: User) => {
     const newUserList = Array.from(userList)
     const newImagePosts = imagePosts.filter((imagePost) => imagePost.author.email !== user.email)
@@ -51,7 +61,7 @@ export default function AdminPage() {
     <div>
       <NavBar pageName="Admin Page" />
       <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", position: "relative" }}>
-        <Tabs value={tab} onChange={(event, value) => {
+        <Tabs value={tab} onChange={(_event, value) => {
           setTab(value)
           setCanLoadMorePosts(true)
           setPageNumber(0)
@@ -78,6 +88,3 @@ export default function AdminPage() {
   );
 }
 
-enum AdminTab {
-  BLOG, USERS
-}

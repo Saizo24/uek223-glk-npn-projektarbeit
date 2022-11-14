@@ -6,6 +6,10 @@ import BottomBar from "../../organisms/BottomBar/BottomBar";
 import ImagePostBlog from "../../organisms/ImagePostBlog/ImagePostBlog";
 import NavBar from "../../organisms/NavBar/NavBar";
 
+/**
+ * Default page for all authenticated user. Displays all image posts from newest to oldest.
+ * No posts can be edited here.
+ */
 export default function HomePage() {
   const [imagePosts, setImagePosts] = useState<ImagePost[]>([]);
   const [pageNumber, setPageNumber] = useState<number>(0);

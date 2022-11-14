@@ -17,11 +17,11 @@ const validationSchema = yup.object().shape({
     firstName: yup
         .string()
         .required("Please enter your new first name.")
-        .max(20, "First names can only be 200 characters long."),
+        .max(20, "First names can only be up to 20 characters long."),
     lastName: yup
         .string()
         .required("Please enter your new last name.")
-        .max(20, "First names can only be 200 characters long."),
+        .max(20, "First names can only be up to 20 characters long."),
 });
 
 type Props = {
@@ -29,18 +29,15 @@ type Props = {
     sx?: SxProps
 }
 
-
-
 const EditUserPopUp = ({ user, sx }: Props) => {
 
-    const [openPopUp, setOpenPopUp] = useState<boolean>(false)
-
     const navigate = useNavigate()
+
+    const [openPopUp, setOpenPopUp] = useState<boolean>(false)
 
     const handleOpenPopUp = () => {
         setOpenPopUp(true)
     }
-
     const handleClosePopUp = () => {
         setOpenPopUp(false)
     }
@@ -142,7 +139,6 @@ const EditUserPopUp = ({ user, sx }: Props) => {
                     )}
                 </Formik>
             </Dialog>
-
         </Box>
     )
 }

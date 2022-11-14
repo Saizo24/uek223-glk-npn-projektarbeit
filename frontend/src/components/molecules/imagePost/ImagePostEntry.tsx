@@ -1,4 +1,4 @@
-import { Card, CardContent, Dialog, DialogActions, IconButton, Tooltip, Typography, Button } from "@mui/material";
+import { Card, CardContent, Dialog, DialogActions, IconButton, Tooltip, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import React, { useEffect, useState, useContext } from "react";
 import { ImagePost } from "../../../types/models/ImagePost.model";
@@ -15,8 +15,15 @@ type Props = {
     deletePost: (imagePost: ImagePost) => void
 };
 
+//Determines, how many likes are shown with full name
 const MAX_LIKES_SHOWN = 3
 
+
+/*
+ * Card for showing a full image post. Clicking on the image enlarges it in a dialog window. Only
+ * the author or admin can edit its content. Only imageUrl and description are editable. Hovering
+ * over the likes will show a tooltip of who liked the image post the newest
+ */
 const ImagePostEntry = ({ imagePost, editable, deletePost }: Props) => {
 
     const activeUserContext = useContext(ActiveUserContext);
@@ -32,28 +39,31 @@ const ImagePostEntry = ({ imagePost, editable, deletePost }: Props) => {
         setImageURL(imagePost.imageURL);
     }, [imagePost]);
 
+    //handles like and unlike of a image post
     const likePost = () => {
         const liker = imagePost.likes.find((user) => { return activeUser && user.email === activeUser.email })
         if (liker) {
             ImagePostService().unlikePostByUsername(imagePost, liker.email)
             imagePost.likes.splice(imagePost.likes.indexOf(liker), 1)
             setIsLiked(false)
-        } else if (activeUser) {
+        }
+        if (!liker && activeUser) {
             ImagePostService().likePostByUsername(imagePost, activeUser.email)
             imagePost.likes.push(activeUser)
             setIsLiked(true)
         }
     }
 
+    //generates the text for the tooltip. The first few will be shown with full name, the rest will be sumarized. Newer likes will be shown first
     const showLikesToolTip = () => {
         const lastLikes: string[] = []
+        const hiddenLikes = imagePost.likes.length > MAX_LIKES_SHOWN ? ` and ${imagePost.likes.length - MAX_LIKES_SHOWN} more` : ""
         imagePost.likes.slice(-MAX_LIKES_SHOWN).forEach((like) => { lastLikes.push(`${like.firstName} ${like.lastName}`) })
         if (imagePost.likes.length === 0) {
             return "No likes yet"
         }
-        return lastLikes.reverse().join(", ")
-            + (imagePost.likes.length > MAX_LIKES_SHOWN ? ` and ${imagePost.likes.length - MAX_LIKES_SHOWN} more` : " ")
-            + ` like${imagePost.likes.length === 1 ? "s" : ""} this post.`
+        lastLikes.reverse()
+        return `${lastLikes.join(", ")}${hiddenLikes} like${imagePost.likes.length === 1 ? "s" : ""} this post.`
     }
 
     const handleClose = () => {
@@ -102,7 +112,9 @@ const ImagePostEntry = ({ imagePost, editable, deletePost }: Props) => {
                     Posted on: {publicationDateTime.toLocaleDateString()} at{" "}
                     {publicationDateTime.toLocaleTimeString()}
                 </Typography>
-                <Tooltip title={<p style={{ fontSize: "15px" }}>{showLikesToolTip()}</p>} placement="bottom-start">
+                <Tooltip
+                    title={<p style={{ fontSize: "15px" }}>{showLikesToolTip()}</p>}
+                    placement="bottom-start">
                     <Typography>
                         Likes: {imagePost.likes.length}
                     </Typography>

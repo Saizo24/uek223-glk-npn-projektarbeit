@@ -15,6 +15,11 @@ import { Nullable } from "../../../types/Nullable";
 import { User } from "../../../types/models/User.model";
 import EditUserPopUp from "../../molecules/EditUserPopUp/EditUserPopUp";
 
+/**
+ * Shows the profile page of a user. If a regular user tries to enter the url to another users profile page,
+ * it will instead navigate to the unauthorized page. Admins can visit the profile page of all user. Here
+ * users can edit or delete their image posts or create a new one.
+ */
 export default function ProfilePage() {
   const { userid } = useParams()
 
@@ -28,16 +33,20 @@ export default function ProfilePage() {
   const [pageNumber, setPageNumber] = useState<number>(0);
   const [canLoadMorePosts, setCanLoadMorePosts] = useState<boolean>(true);
 
+  //loads the user of the profile page
   useEffect(() => {
     if (userid) {
       UserService
         .getUser(userid)
         .then((data) => {
           setUser(data.data)
+        }).catch(() => {
+          navigate("/unauthorized")
         })
     }
   }, [])
 
+  //Loads image post of the user of this profile page
   useEffect(() => {
     if (user) {
       ImagePostService()

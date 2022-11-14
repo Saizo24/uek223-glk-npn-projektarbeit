@@ -3,7 +3,6 @@ import { Form, Formik, FormikHelpers, FormikProps } from 'formik'
 import * as yup from "yup";
 import React, { useState } from 'react'
 import { ImagePostService } from '../../../Services/ImagePostService'
-import { Author } from '../../../types/models/Author.model'
 import { ImagePost } from '../../../types/models/ImagePost.model'
 import { User } from '../../../types/models/User.model'
 import { Nullable } from '../../../types/Nullable';
@@ -27,18 +26,15 @@ type Props = {
     sx?: SxProps
 }
 
-
-
 const CreateEditPostPopUp = ({ activeUser, sx }: Props) => {
 
-    const [openPopUp, setOpenPopUp] = useState<boolean>(false)
-
     const navigate = useNavigate()
+
+    const [openPopUp, setOpenPopUp] = useState<boolean>(false)
 
     const handleOpenPopUp = () => {
         setOpenPopUp(true)
     }
-
     const handleClosePopUp = () => {
         setOpenPopUp(false)
     }
@@ -74,7 +70,6 @@ const CreateEditPostPopUp = ({ activeUser, sx }: Props) => {
                             author: { email: "", lastName: "", firstName: "" },
                             publicationTime: new Date(),
                             likes: []
-
                         }
                         ImagePostService().createNewPost(newImagePost, activeUser ? activeUser.email : "");
                         formikHelpers.setSubmitting(false);
@@ -131,7 +126,6 @@ const CreateEditPostPopUp = ({ activeUser, sx }: Props) => {
                     )}
                 </Formik>
             </Dialog>
-
         </Box>
     )
 }

@@ -8,6 +8,10 @@ type Props = {
   children?: HTMLElement | string;
 };
 
+/**
+ * Component for Navbar. Homepage is exclusive for authenticated user, admin page for admins. Profile page can be accessed by admin and
+ * regular users, but only admins can navigate to other users profile page through the admin page.
+ */
 export default function NavBar({ pageName }: Props) {
   const navigate = useNavigate();
   const { logout } = useContext(ActiveUserContext);
@@ -56,14 +60,14 @@ export default function NavBar({ pageName }: Props) {
             onClick={() => navigate(`/users/${user?.id}`)}
             sx={{ display: visible ? undefined : "none" }}
           >
-            {pageName === "Someone's Blog" ? "" : "Profile"}
+            Profile
           </Button>
           <Button
             color="inherit"
             onClick={handleSubmit}
             sx={{ display: visible ? undefined : "none" }}
           >
-            {pageName === "Someone's Blog" ? "" : "Logout"}
+            Logout
           </Button>
         </Toolbar>
       </AppBar>
