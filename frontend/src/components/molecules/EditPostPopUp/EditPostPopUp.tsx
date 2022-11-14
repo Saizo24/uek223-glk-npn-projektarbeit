@@ -69,7 +69,11 @@ const EditPostPopUp = ({ imagePost, activeUser, sx }: Props) => {
                             imageURL: values.imageURL,
                             description: values.description,
                         }
-                        ImagePostService().updatePostById(newImagePost, activeUser ? activeUser.id : "");
+                        ImagePostService()
+                            .updatePostById(newImagePost, activeUser ? activeUser.id : "")
+                            .catch((error) => {
+                                alert(`Error: couldn't update image posts: ${error.message}`)
+                            })
                         formikHelpers.setSubmitting(false);
                         handleClosePopUp()
                         navigate(0)

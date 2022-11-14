@@ -43,7 +43,11 @@ const ImagePostBlog = ({
     const newImagePosts = Array.from(imagePosts)
     newImagePosts.splice(newImagePosts.indexOf(imagePost), 1)
     setImagePosts(newImagePosts)
-    ImagePostService().deletePostById(activeUser ? activeUser.id : "", imagePost)
+    ImagePostService()
+      .deletePostById(activeUser ? activeUser.id : "", imagePost)
+      .catch((error) => {
+        alert(`Error: couldn't delete image posts: ${error.message}`)
+      })
   }
 
   return (
