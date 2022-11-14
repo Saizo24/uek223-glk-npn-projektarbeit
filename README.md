@@ -127,7 +127,7 @@ This test demonstrates that an admin has a specific homepage and in this page th
 
 ## Use Case Diagram
 
-<img src="./img/useCaseDiagram.png" alt="Use Case Diagram">
+<img src="./img/UseCaseDiagram.png" alt="Use Case Diagram">
 
 <img src="./img/useCaseDescription.JPG" alt="Use Case Description">
 
