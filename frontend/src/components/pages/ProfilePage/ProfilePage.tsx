@@ -57,6 +57,8 @@ export default function ProfilePage() {
           }
           const newImagePosts: ImagePost[] = pageNumber === 0 ? data : imagePosts.concat(data);
           setImagePosts(newImagePosts);
+        }).catch((error) => {
+          alert(`Error: couldn't load image posts: ${error.message}`)
         });
     }
   }, [pageNumber, user]);

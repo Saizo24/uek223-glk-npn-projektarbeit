@@ -43,12 +43,20 @@ const ImagePostEntry = ({ imagePost, editable, deletePost }: Props) => {
     const likePost = () => {
         const liker = imagePost.likes.find((user) => { return activeUser && user.email === activeUser.email })
         if (liker) {
-            ImagePostService().unlikePostByUsername(imagePost, liker.email)
+            ImagePostService()
+                .unlikePostByUsername(imagePost, liker.email)
+                .catch((error) => {
+                    alert(`Error: couldn't finish action: ${error.message}`)
+                })
             imagePost.likes.splice(imagePost.likes.indexOf(liker), 1)
             setIsLiked(false)
         }
         if (!liker && activeUser) {
-            ImagePostService().likePostByUsername(imagePost, activeUser.email)
+            ImagePostService()
+                .likePostByUsername(imagePost, activeUser.email)
+                .catch((error) => {
+                    alert(`Error: couldn't finish action: ${error.message}`)
+                })
             imagePost.likes.push(activeUser)
             setIsLiked(true)
         }

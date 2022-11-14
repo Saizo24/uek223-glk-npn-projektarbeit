@@ -71,7 +71,11 @@ const CreateEditPostPopUp = ({ activeUser, sx }: Props) => {
                             publicationTime: new Date(),
                             likes: []
                         }
-                        ImagePostService().createNewPost(newImagePost, activeUser ? activeUser.email : "");
+                        ImagePostService()
+                            .createNewPost(newImagePost, activeUser ? activeUser.email : "")
+                            .catch((error) => {
+                                alert(`Error: couldn't create image posts: ${error.message}`)
+                            })
                         formikHelpers.setSubmitting(false);
                         handleClosePopUp()
                         navigate(0)

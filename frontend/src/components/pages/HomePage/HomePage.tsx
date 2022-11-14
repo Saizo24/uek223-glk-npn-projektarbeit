@@ -24,6 +24,8 @@ export default function HomePage() {
         }
         const newImagePosts: ImagePost[] = imagePosts.concat(data);
         setImagePosts(newImagePosts);
+      }).catch((error) => {
+        alert(`Error: couldn't load image posts: ${error.message}`)
       });
   }, [pageNumber]);
 

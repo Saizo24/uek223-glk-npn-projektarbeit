@@ -36,6 +36,8 @@ export default function AdminPage() {
         const newImagePosts: ImagePost[] =
           pageNumber === 0 ? data : imagePosts.concat(data);
         setImagePosts(newImagePosts);
+      }).catch((error) => {
+        alert(`Error: couldn't load image posts: ${error.message}`)
       });
   }, [pageNumber]);
 
@@ -44,6 +46,8 @@ export default function AdminPage() {
       const newUserList: User[] =
         pageNumber === 0 ? data : userList.concat(data);
       setUserList(newUserList);
+    }).catch((error) => {
+      alert(`Error: couldn't load users: ${error.message}`)
     });
   }, [pageNumber]);
 
@@ -72,7 +76,7 @@ export default function AdminPage() {
       >
         <Tabs
           value={tab}
-          onChange={(event, value) => {
+          onChange={(_event, value) => {
             setTab(value);
             setCanLoadMorePosts(true);
             setPageNumber(0);
@@ -99,9 +103,4 @@ export default function AdminPage() {
       <BottomBar />
     </div>
   );
-}
-
-enum AdminTab {
-  BLOG,
-  USERS,
 }
