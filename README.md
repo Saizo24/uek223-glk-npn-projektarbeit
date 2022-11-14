@@ -133,7 +133,7 @@ This test demonstrates that an admin has a specific homepage and in this page th
 
 ## Sequence Diagram
 
-<img src="./img/sequence_diagram.jpg" alt="Sequence Diagram">
+<img src="./img/sequenceDiagram.png" alt="Sequence Diagram">
 
 
 
