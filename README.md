@@ -119,21 +119,21 @@ This test demonstrates that an admin has a specific homepage and in this page th
 
 ## Domain Model
 
-<img src="IMG/domain_model.jpg" alt="Domain Model">
+<img src="./img/domainmodel.png" alt="Domain Model">
 
 ## ERD Diagram 
 
-<img src="IMG/erd.png" alt="ERD">
+<img src="./img/ERD.JPG" alt="ERD">
 
 ## Use Case Diagram
 
-<img src="IMG/use_case_diagram.jpg" alt="Use Case Diagram"
+<img src="img/useCaseDiagram.png" alt="Use Case Diagram">
 
-<img src="IMG/use_case_description.jpg" alt="Use Case Description">
+<img src="./img/use_case_description.jpg" alt="Use Case Description">
 
 ## Sequence Diagram
 
-<img src="IMG/sequence_diagram.jpg" alt="Sequence Diagram">
+<img src="./img/sequence_diagram.jpg" alt="Sequence Diagram">
 
 
 
