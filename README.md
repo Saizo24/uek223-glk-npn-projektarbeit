@@ -1,23 +1,23 @@
 # Table of contents
-Prerequisites(#Prerequisites)
-[Setup](#Setup)
-    [GitHub](#Github)
-    [Database](#Database)
-    [Backend](#Backend)    
-    [Frontend](#Frontend)
-    [Users](#Users)
-[Fixes](#Fixes)
-[Additional Data](#Additional Data)
-[Testing](#Testing)
-    [Setup Postman](#Setup Postman)
-    [Setup Cypress](#Setup Cypress)
-    [Test Postman](#Test Postman)
-    [Test Cypress](#Test Cypress)
-[UML](#UML)
-    [Domain Model](#Domain-Model)
-    [ERD Diagram](#ERD-Diagram)
-    [Use Case Diagram](#Use-Case-Diagram)
-    [Sequence Diagram](#Sequence-Diagram)
+1. Prerequisites(#Prerequisites)
+2. [Setup](#Setup)
+    1. [GitHub](#Github)
+    2. [Database](#Database)
+    3. [Backend](#Backend)    
+    4. [Frontend](#Frontend)
+    5. [Users](#Users)
+3. [Fixes](#Fixes)
+4. [Additional Data](#Additional Data)
+5. [Testing](#Testing)
+    1. [Setup Postman](#Setup Postman)
+    2. [Setup Cypress](#Setup Cypress)
+    3. [Test Postman](#Test Postman)
+    4. [Test Cypress](#Test Cypress)
+6. [UML](#UML)
+    1. [Domain Model](#Domain-Model)
+    2. [ERD Diagram](#ERD-Diagram)
+    3. [Use Case Diagram](#Use-Case-Diagram)
+    4. [Sequence Diagram](#Sequence-Diagram)
 
 
 
@@ -127,9 +127,9 @@ This test demonstrates that an admin has a specific homepage and in this page th
 
 ## Use Case Diagram
 
-<img src="img/useCaseDiagram.png" alt="Use Case Diagram">
+<img src="./img/useCaseDiagram.png" alt="Use Case Diagram">
 
-<img src="./img/use_case_description.jpg" alt="Use Case Description">
+<img src="./img/useCaseDescription.JPG" alt="Use Case Description">
 
 ## Sequence Diagram
 
