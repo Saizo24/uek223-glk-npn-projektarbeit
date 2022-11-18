@@ -1,0 +1,15 @@
+version: '1.0'
+
+services:
+
+  pg-db:
+    image: postgres
+    container_name: uek223db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORT: postgres
+
+  uek223backend:
+    image:
+volumes:
