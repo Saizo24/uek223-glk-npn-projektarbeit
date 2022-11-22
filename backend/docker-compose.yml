@@ -1,35 +1,34 @@
-version: '3.7'
+version: '3.8'
 
 services:
   frontend:
-    mem_limit: 128m
     cpus: 0.1
 
-    restart: unless-stopped
-    image: #todo
+    image: kunfi/frontend
     container_name: frontend
     depends_on:
       - backend
     ports:
-      - 3000:80
+      - 8001:3000
+    env_file: 
+      - .env
   backend:
     mem_limit: 512M
     cpus: 0.2
 
-    restart: unless-stopped
-    image: #todo
+    image: kunfi/backend
     container_name: backend
-    ports:
-      - 8080:8080
-    environment:
-      -  #env
     depends_on:
       - db
+    ports:
+      - 8086:8086
+    env_file: 
+      - .env
+
   db:
     mem_limit: 128m
     cpus: 0.05
 
-    restart: unless-stopped
     image: 'postgres:10-alpine'
     container_name: db
     ports:
