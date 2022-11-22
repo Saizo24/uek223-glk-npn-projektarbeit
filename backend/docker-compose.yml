@@ -1,15 +1,35 @@
-version: '1.0'
+version: '3.8'
 
 services:
 
-  pg-db:
-    image: postgres
-    container_name: uek223db
-    ports:
-      - "5432:5432"
-    environment:
-      POSTGRES_PASSWORT: postgres
+  pgdb:
+    mem_limit: 128m
+    cpus: 0.05
 
-  uek223backend:
-    image:
-volumes:
+    image: postgres
+    container_name: pgdb
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: postgres
+
+  pg:
+    mem_limit: 512M
+    cpus: 0.2
+
+    image: ngocphuc24/uek223backend
+    container_name: uek223backend
+    env_file:
+      - .env
+    ports:
+      - 8099:8099
+
+  react:
+    cpus: 0.1
+
+    container_name: uek223frontend
+    image: ngocphuc24/uek223frontend
+    env_file:
+      - .env
+    ports:
+      - 3000:3000

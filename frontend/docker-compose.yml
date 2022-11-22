@@ -1,40 +1,37 @@
-version: '3.7'
+version: "3.8"
 
 services:
   frontend:
-    mem_limit: 128m
     cpus: 0.1
 
-    restart: unless-stopped
-    image: #todo
+    image: ngocphuc24/uek223frontend
     container_name: frontend
     depends_on:
       - backend
     ports:
-      - 3000:80
+      - 8014:3000
+    env_file:
+      - .env
+
   backend:
     mem_limit: 512M
     cpus: 0.2
 
-    restart: unless-stopped
-    image: #todo
+    image: ngocphuc24/uek223backend
     container_name: backend
     ports:
-      - 8080:8080
-    environment:
-      -  #env
+      - 8099:8099
+    env_file:
+      - .env
     depends_on:
       - db
   db:
     mem_limit: 128m
     cpus: 0.05
 
-    restart: unless-stopped
-    image: 'postgres:10-alpine'
+    image: "postgres:10-alpine"
     container_name: db
     ports:
-      - '5432:5432'
+      - "5432:5432"
     environment:
-      POSTGRES_PASSWORD: 'postgres'
-      POSTGRES_USER: 'postgres'
-      POSTGRES_DB: 'postgres'
+      POSTGRES_PASSWORD: "postgres"
